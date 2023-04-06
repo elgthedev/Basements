@@ -12,7 +12,7 @@ namespace Basements
     public class BasementsMod : BaseUnityPlugin
     {
         private const string ModName = "Basement";
-        internal const string ModVersion = "1.0.3";
+        internal const string ModVersion = "1.1.0";
         private const string ModGUID = "com.rolopogo.Basement";
         private static Harmony harmony = null!;
         ConfigSync configSync = new(ModGUID) 

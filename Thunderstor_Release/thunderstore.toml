@@ -1,0 +1,29 @@
+[config]
+schemaVersion = "0.0.1"
+
+[package]
+namespace = "sbtoonz"
+name = "Basements"
+versionNumber = "1.1.0"
+description = "Expand into the earth with this placeable basement"
+websiteUrl = "https://github.com/sbtoonz/Basements"
+containsNsfwContent = false
+[package.dependencies]
+denikson-BepInExPack_Valheim = "5.4.21001"
+
+
+[build]
+icon = "./icon.png"
+readme = "./README.md"
+outdir = "./"
+
+[[build.copy]]
+source = "./plugins"
+target = "./plugins"
+
+
+[publish]
+repository = "https://thunderstore.io"
+communities = [ "valheim", ]
+categories = [ "mods" ]
+
