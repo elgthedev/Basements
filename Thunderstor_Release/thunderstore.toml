@@ -9,7 +9,7 @@ description = "Expand into the earth with this placeable basement"
 websiteUrl = "https://github.com/sbtoonz/Basements"
 containsNsfwContent = false
 [package.dependencies]
-denikson-BepInExPack_Valheim = "5.4.21001"
+denikson-BepInExPack_Valheim = "5.4.2102"
 
 
 [build]

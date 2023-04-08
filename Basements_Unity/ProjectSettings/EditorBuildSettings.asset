@@ -2,7 +2,37 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!1045 &1
 EditorBuildSettings:
-  m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_ObjectHideFlags: 0
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/loading.unity
+    guid: ee182f5830a56ce4794cfdba1f360ada
+  - enabled: 1
+    path: Assets/Scenes/start.unity
+    guid: 46f2b5630a308fe4ca6ff6eeac86746b
+  - enabled: 1
+    path: Assets/Scenes/main.unity
+    guid: ca9904d4356f77f42a07c81a1b8f6d62
+  - enabled: 1
+    path: Assets/Scenes/locations.unity
+    guid: 40329609c0cfbe444a84f1353f476cac
+  - enabled: 1
+    path: Assets/Scenes/rooms.unity
+    guid: d7ce26431a8738445801dc86c9302021
+  - enabled: 1
+    path: Assets/Scenes/locations_cp1.unity
+    guid: 1b90952f5b6075b4ebf83dd2d7efeee1
+  - enabled: 1
+    path: Assets/Scenes/locations_mountaincaves.unity
+    guid: e35e964abcb6aee44a878ace2a065838
+  - enabled: 1
+    path: Assets/Scenes/rooms_cave.unity
+    guid: 972ceb1addd636f47966a241291ede2c
+  - enabled: 1
+    path: Assets/Scenes/locations_mistlands.unity
+    guid: cd0a1e90c87276746aab6376b15279fe
+  - enabled: 1
+    path: Assets/Scenes/rooms_mistlands.unity
+    guid: a66a9c637213ad4438f4b7c3c85bd96a
   m_configObjects: {}

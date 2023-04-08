@@ -52,12 +52,8 @@ namespace Basements
             buildPiece.RequiredItems.Add("Wood", 100, recover: false);
             buildPiece.Category.Add(BuildPieceCategory.Misc);
             buildPiece.Crafting.Set(CraftingTable.StoneCutter);
-            buildPiece.Prefab.AddComponent<Basement>();
             basementPrefab = buildPiece.Prefab.gameObject;
             MaterialReplacer.RegisterGameObjectForMatSwap(basementPrefab);
-            Piece component = basementPrefab.GetComponent<Piece>();
-            component.m_clipEverything = true;
-            component.m_repairPiece = false;
             //buildPiece.SpecialProperties = new SpecialProperties() { AdminOnly = true, NoConfig = true}; // You can declare multiple properties in one line           
         }
     }

@@ -2,9 +2,9 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!129 &1
 PlayerSettings:
+  serializedVersion: 22
   m_ObjectHideFlags: 0
-  serializedVersion: 23
-  productGUID: 7246e473c184d0343aef1778290f1f00
+  productGUID: f8e0310ba3b304a9aa81e3b84df69849
   AndroidProfiler: 0
   AndroidFilterTouchesWhenObscured: 0
   AndroidEnableSustainedPerformanceMode: 0
@@ -12,20 +12,29 @@ PlayerSettings:
   targetDevice: 2
   useOnDemandResources: 0
   accelerometerFrequency: 60
-  companyName: DefaultCompany
-  productName: Basements_Unity
-  defaultCursor: {fileID: 0}
-  cursorHotspot: {x: 0, y: 0}
-  m_SplashScreenBackgroundColor: {r: 0.13725491, g: 0.12156863, b: 0.1254902, a: 1}
+  companyName: IronGate
+  productName: Valheim
+  defaultCursor:
+    fileID: 2800000
+    guid: a28ef951cce41e444943d08b9e609946
+    type: 3
+  cursorHotspot:
+    x: 0
+    y: 0
+  m_SplashScreenBackgroundColor:
+    r: 0
+    g: 0
+    b: 0
+    a: 1
   m_ShowUnitySplashScreen: 1
-  m_ShowUnitySplashLogo: 1
+  m_ShowUnitySplashLogo: 0
   m_SplashScreenOverlayOpacity: 1
-  m_SplashScreenAnimation: 1
+  m_SplashScreenAnimation: 2
   m_SplashScreenLogoStyle: 1
-  m_SplashScreenDrawMode: 0
+  m_SplashScreenDrawMode: 1
   m_SplashScreenBackgroundAnimationZoom: 1
   m_SplashScreenLogoAnimationZoom: 1
-  m_SplashScreenBackgroundLandscapeAspect: 1
+  m_SplashScreenBackgroundLandscapeAspect: 2.352459
   m_SplashScreenBackgroundPortraitAspect: 1
   m_SplashScreenBackgroundLandscapeUvs:
     serializedVersion: 2
@@ -39,11 +48,23 @@ PlayerSettings:
     y: 0
     width: 1
     height: 1
-  m_SplashScreenLogos: []
-  m_VirtualRealitySplashScreen: {fileID: 0}
-  m_HolographicTrackingLossScreen: {fileID: 0}
-  defaultScreenWidth: 1920
-  defaultScreenHeight: 1080
+  m_SplashScreenLogos:
+  - logo:
+      fileID: 21300000
+      guid: c9d614d8050aca041aa493069c3ec09d
+      type: 2
+    duration: 2
+  - logo:
+      fileID: 21300000
+      guid: 2454a71e94ec90e419fefddda04cd31c
+      type: 2
+    duration: 2
+  m_VirtualRealitySplashScreen:
+    fileID: 0
+  m_HolographicTrackingLossScreen:
+    fileID: 0
+  defaultScreenWidth: 1366
+  defaultScreenHeight: 768
   defaultScreenWidthWeb: 960
   defaultScreenHeightWeb: 600
   m_StereoRenderingPath: 0
@@ -51,7 +72,13 @@ PlayerSettings:
   m_MTRendering: 1
   mipStripping: 0
   numberOfMipsStripped: 0
-  m_StackTraceTypes: 010000000100000001000000010000000100000001000000
+  m_StackTraceTypes:
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
   iosShowActivityIndicatorOnLoading: -1
   androidShowActivityIndicatorOnLoading: -1
   iosUseCustomAppBackgroundBehavior: 0
@@ -66,7 +93,7 @@ PlayerSettings:
   disableDepthAndStencilBuffers: 0
   androidStartInFullscreen: 1
   androidRenderOutsideSafeArea: 1
-  androidUseSwappy: 1
+  androidUseSwappy: 0
   androidBlitType: 0
   androidResizableWindow: 0
   androidDefaultWindowWidth: 1920
@@ -85,10 +112,10 @@ PlayerSettings:
   hideHomeButton: 0
   submitAnalytics: 1
   usePlayerLog: 1
-  bakeCollisionMeshes: 0
+  bakeCollisionMeshes: 1
   forceSingleInstance: 0
   useFlipModelSwapchain: 1
-  resizableWindow: 0
+  resizableWindow: 1
   useMacAppStoreValidation: 0
   macAppStoreCategory: public.app-category.games
   gpuSkinning: 1
@@ -99,7 +126,7 @@ PlayerSettings:
   xboxEnableFitness: 0
   visibleInBackground: 1
   allowFullscreenSwitch: 1
-  fullscreenMode: 1
+  fullscreenMode: 3
   xboxSpeechDB: 0
   xboxEnableHeadOrientation: 0
   xboxEnableGuest: 0
@@ -113,7 +140,7 @@ PlayerSettings:
   xboxOneDisableEsram: 0
   xboxOneEnableTypeOptimization: 0
   xboxOnePresentImmediateThreshold: 0
-  switchQueueCommandMemory: 0
+  switchQueueCommandMemory: 1048576
   switchQueueControlMemory: 16384
   switchQueueComputeMemory: 262144
   switchNVNShaderPoolsGranularity: 33554432
@@ -134,37 +161,34 @@ PlayerSettings:
     16:10: 1
     16:9: 1
     Others: 1
-  bundleVersion: 0.1
+  bundleVersion: 1.0
   preloadedAssets: []
   metroInputSource: 0
   wsaTransparentSwapchain: 0
   m_HolographicPauseOnTrackingLoss: 1
-  xboxOneDisableKinectGpuReservation: 1
-  xboxOneEnable7thCore: 1
+  xboxOneDisableKinectGpuReservation: 0
+  xboxOneEnable7thCore: 0
   vrSettings:
     enable360StereoCapture: 0
   isWsaHolographicRemotingEnabled: 0
   enableFrameTimingStats: 0
   useHDRDisplay: 0
   D3DHDRBitDepth: 0
-  m_ColorGamuts: 00000000
+  m_ColorGamuts:
+  - 0
   targetPixelDensity: 30
   resolutionScalingMode: 0
-  resetResolutionOnWindowResize: 0
   androidSupportedAspectRatio: 1
   androidMaxAspectRatio: 2.1
   applicationIdentifier: {}
-  buildNumber:
-    Standalone: 0
-    iPhone: 0
-    tvOS: 0
+  buildNumber: {}
   overrideDefaultApplicationIdentifier: 0
-  AndroidBundleVersionCode: 1
-  AndroidMinSdkVersion: 19
+  AndroidBundleVersionCode: 0
+  AndroidMinSdkVersion: 0
   AndroidTargetSdkVersion: 0
-  AndroidPreferredInstallLocation: 1
+  AndroidPreferredInstallLocation: 0
   aotOptions: 
-  stripEngineCode: 1
+  stripEngineCode: 0
   iPhoneStrippingLevel: 0
   iPhoneScriptCallOptimization: 0
   ForceInternetPermission: 0
@@ -172,21 +196,23 @@ PlayerSettings:
   CreateWallpaper: 0
   APKExpansionFiles: 0
   keepLoadedShadersAlive: 0
-  StripUnusedMeshComponents: 1
-  VertexChannelCompressionMask: 4054
-  iPhoneSdkVersion: 988
-  iOSTargetOSVersionString: 11.0
+  StripUnusedMeshComponents: 0
+  VertexChannelCompressionMask: 0
+  iPhoneSdkVersion: 0
+  iOSTargetOSVersionString: 
   tvOSSdkVersion: 0
   tvOSRequireExtendedGameController: 0
-  tvOSTargetOSVersionString: 11.0
+  tvOSTargetOSVersionString: 
   uIPrerenderedIcon: 0
   uIRequiresPersistentWiFi: 0
-  uIRequiresFullScreen: 1
-  uIStatusBarHidden: 1
+  uIRequiresFullScreen: 0
+  uIStatusBarHidden: 0
   uIExitOnSuspend: 0
   uIStatusBarStyle: 0
-  appleTVSplashScreen: {fileID: 0}
-  appleTVSplashScreen2x: {fileID: 0}
+  appleTVSplashScreen:
+    fileID: 0
+  appleTVSplashScreen2x:
+    fileID: 0
   tvOSSmallIconLayers: []
   tvOSSmallIconLayers2x: []
   tvOSLargeIconLayers: []
@@ -196,21 +222,24 @@ PlayerSettings:
   tvOSTopShelfImageWideLayers: []
   tvOSTopShelfImageWideLayers2x: []
   iOSLaunchScreenType: 0
-  iOSLaunchScreenPortrait: {fileID: 0}
-  iOSLaunchScreenLandscape: {fileID: 0}
+  iOSLaunchScreenPortrait:
+    fileID: 0
+  iOSLaunchScreenLandscape:
+    fileID: 0
   iOSLaunchScreenBackgroundColor:
     serializedVersion: 2
     rgba: 0
-  iOSLaunchScreenFillPct: 100
-  iOSLaunchScreenSize: 100
+  iOSLaunchScreenFillPct: 0
+  iOSLaunchScreenSize: 0
   iOSLaunchScreenCustomXibPath: 
   iOSLaunchScreeniPadType: 0
-  iOSLaunchScreeniPadImage: {fileID: 0}
+  iOSLaunchScreeniPadImage:
+    fileID: 0
   iOSLaunchScreeniPadBackgroundColor:
     serializedVersion: 2
     rgba: 0
-  iOSLaunchScreeniPadFillPct: 100
-  iOSLaunchScreeniPadSize: 100
+  iOSLaunchScreeniPadFillPct: 0
+  iOSLaunchScreeniPadSize: 0
   iOSLaunchScreeniPadCustomXibPath: 
   iOSLaunchScreenCustomStoryboardPath: 
   iOSLaunchScreeniPadCustomStoryboardPath: 
@@ -218,8 +247,8 @@ PlayerSettings:
   iOSURLSchemes: []
   iOSBackgroundModes: 0
   iOSMetalForceHardShadows: 0
-  metalEditorSupport: 1
-  metalAPIValidation: 1
+  metalEditorSupport: 0
+  metalAPIValidation: 0
   iOSRenderExtraFrameOnPause: 0
   iosCopyPluginsCodeInsteadOfSymlink: 0
   appleDeveloperTeamID: 
@@ -229,12 +258,12 @@ PlayerSettings:
   tvOSManualSigningProvisioningProfileType: 0
   appleEnableAutomaticSigning: 0
   iOSRequireARKit: 0
-  iOSAutomaticallyDetectAndAddCapabilities: 1
+  iOSAutomaticallyDetectAndAddCapabilities: 0
   appleEnableProMotion: 0
   shaderPrecisionModel: 0
-  clonedFromGUID: c0afd0d1d80e3634a9dac47e8a0426ea
-  templatePackageId: com.unity.template.3d@6.0.1
-  templateDefaultScene: Assets/Scenes/SampleScene.unity
+  clonedFromGUID: 00000000000000000000000000000000
+  templatePackageId: 
+  templateDefaultScene: 
   useCustomMainManifest: 0
   useCustomLauncherManifest: 0
   useCustomMainGradleTemplate: 0
@@ -242,115 +271,54 @@ PlayerSettings:
   useCustomBaseGradleTemplate: 0
   useCustomGradlePropertiesTemplate: 0
   useCustomProguardFile: 0
-  AndroidTargetArchitectures: 1
+  AndroidTargetArchitectures: 0
   AndroidTargetDevices: 0
   AndroidSplashScreenScale: 0
-  androidSplashScreen: {fileID: 0}
+  androidSplashScreen:
+    fileID: 0
   AndroidKeystoreName: 
   AndroidKeyaliasName: 
   AndroidBuildApkPerCpuArchitecture: 0
   AndroidTVCompatibility: 0
-  AndroidIsGame: 1
+  AndroidIsGame: 0
   AndroidEnableTango: 0
-  androidEnableBanner: 1
+  androidEnableBanner: 0
   androidUseLowAccuracyLocation: 0
   androidUseCustomKeystore: 0
-  m_AndroidBanners:
-  - width: 320
-    height: 180
-    banner: {fileID: 0}
+  m_AndroidBanners: []
   androidGamepadSupportLevel: 0
-  chromeosInputEmulation: 1
+  chromeosInputEmulation: 0
   AndroidMinifyWithR8: 0
   AndroidMinifyRelease: 0
   AndroidMinifyDebug: 0
-  AndroidValidateAppBundleSize: 1
-  AndroidAppBundleSizeToValidate: 150
+  AndroidValidateAppBundleSize: 0
+  AndroidAppBundleSizeToValidate: 0
   m_BuildTargetIcons: []
   m_BuildTargetPlatformIcons: []
-  m_BuildTargetBatching:
-  - m_BuildTarget: Standalone
-    m_StaticBatching: 1
-    m_DynamicBatching: 0
-  - m_BuildTarget: tvOS
-    m_StaticBatching: 1
-    m_DynamicBatching: 0
-  - m_BuildTarget: Android
-    m_StaticBatching: 1
-    m_DynamicBatching: 0
-  - m_BuildTarget: iPhone
-    m_StaticBatching: 1
-    m_DynamicBatching: 0
-  - m_BuildTarget: WebGL
-    m_StaticBatching: 0
-    m_DynamicBatching: 0
-  m_BuildTargetGraphicsJobs:
-  - m_BuildTarget: MacStandaloneSupport
-    m_GraphicsJobs: 0
-  - m_BuildTarget: Switch
-    m_GraphicsJobs: 1
-  - m_BuildTarget: MetroSupport
-    m_GraphicsJobs: 1
-  - m_BuildTarget: AppleTVSupport
-    m_GraphicsJobs: 0
-  - m_BuildTarget: BJMSupport
-    m_GraphicsJobs: 1
-  - m_BuildTarget: LinuxStandaloneSupport
-    m_GraphicsJobs: 1
-  - m_BuildTarget: PS4Player
-    m_GraphicsJobs: 1
-  - m_BuildTarget: iOSSupport
-    m_GraphicsJobs: 0
-  - m_BuildTarget: WindowsStandaloneSupport
-    m_GraphicsJobs: 1
-  - m_BuildTarget: XboxOnePlayer
-    m_GraphicsJobs: 1
-  - m_BuildTarget: LuminSupport
-    m_GraphicsJobs: 0
-  - m_BuildTarget: AndroidPlayer
-    m_GraphicsJobs: 0
-  - m_BuildTarget: WebGLSupport
-    m_GraphicsJobs: 0
-  m_BuildTargetGraphicsJobMode:
-  - m_BuildTarget: PS4Player
-    m_GraphicsJobMode: 0
-  - m_BuildTarget: XboxOnePlayer
-    m_GraphicsJobMode: 0
+  m_BuildTargetBatching: []
+  m_BuildTargetGraphicsJobs: []
+  m_BuildTargetGraphicsJobMode: []
   m_BuildTargetGraphicsAPIs:
-  - m_BuildTarget: AndroidPlayer
-    m_APIs: 150000000b000000
+  - m_BuildTarget: LinuxStandaloneSupport
+    m_APIs: 1100000015000000
     m_Automatic: 0
-  - m_BuildTarget: iOSSupport
-    m_APIs: 10000000
-    m_Automatic: 1
-  - m_BuildTarget: AppleTVSupport
-    m_APIs: 10000000
-    m_Automatic: 1
-  - m_BuildTarget: WebGLSupport
-    m_APIs: 0b000000
-    m_Automatic: 1
-  m_BuildTargetVRSettings:
-  - m_BuildTarget: Standalone
-    m_Enabled: 0
-    m_Devices:
-    - Oculus
-    - OpenVR
+  - m_BuildTarget: WindowsStandaloneSupport
+    m_APIs: 0200000015000000
+    m_Automatic: 0
+  m_BuildTargetVRSettings: []
   openGLRequireES31: 0
   openGLRequireES31AEP: 0
   openGLRequireES32: 0
   m_TemplateCustomTags: {}
-  mobileMTRendering:
-    Android: 1
-    iPhone: 1
-    tvOS: 1
+  mobileMTRendering: {}
   m_BuildTargetGroupLightmapEncodingQuality: []
   m_BuildTargetGroupLightmapSettings: []
   m_BuildTargetNormalMapEncoding: []
   playModeTestRunnerEnabled: 0
   runPlayModeTestAsEditModeTest: 0
-  actionOnDotNetUnhandledException: 1
+  actionOnDotNetUnhandledException: 0
   enableInternalProfiler: 0
-  logObjCUncaughtExceptions: 1
+  logObjCUncaughtExceptions: 0
   enableCrashReportAPI: 0
   cameraUsageDescription: 
   locationUsageDescription: 
@@ -358,13 +326,13 @@ PlayerSettings:
   bluetoothUsageDescription: 
   switchNMETAOverride: 
   switchNetLibKey: 
-  switchSocketMemoryPoolSize: 6144
-  switchSocketAllocatorPoolSize: 128
-  switchSocketConcurrencyLimit: 14
-  switchScreenResolutionBehavior: 2
+  switchSocketMemoryPoolSize: 0
+  switchSocketAllocatorPoolSize: 0
+  switchSocketConcurrencyLimit: 0
+  switchScreenResolutionBehavior: 0
   switchUseCPUProfiler: 0
   switchUseGOLDLinker: 0
-  switchApplicationID: 0x01004b9000490000
+  switchApplicationID: 
   switchNSODependencies: 
   switchTitleNames_0: 
   switchTitleNames_1: 
@@ -398,46 +366,78 @@ PlayerSettings:
   switchPublisherNames_13: 
   switchPublisherNames_14: 
   switchPublisherNames_15: 
-  switchIcons_0: {fileID: 0}
-  switchIcons_1: {fileID: 0}
-  switchIcons_2: {fileID: 0}
-  switchIcons_3: {fileID: 0}
-  switchIcons_4: {fileID: 0}
-  switchIcons_5: {fileID: 0}
-  switchIcons_6: {fileID: 0}
-  switchIcons_7: {fileID: 0}
-  switchIcons_8: {fileID: 0}
-  switchIcons_9: {fileID: 0}
-  switchIcons_10: {fileID: 0}
-  switchIcons_11: {fileID: 0}
-  switchIcons_12: {fileID: 0}
-  switchIcons_13: {fileID: 0}
-  switchIcons_14: {fileID: 0}
-  switchIcons_15: {fileID: 0}
-  switchSmallIcons_0: {fileID: 0}
-  switchSmallIcons_1: {fileID: 0}
-  switchSmallIcons_2: {fileID: 0}
-  switchSmallIcons_3: {fileID: 0}
-  switchSmallIcons_4: {fileID: 0}
-  switchSmallIcons_5: {fileID: 0}
-  switchSmallIcons_6: {fileID: 0}
-  switchSmallIcons_7: {fileID: 0}
-  switchSmallIcons_8: {fileID: 0}
-  switchSmallIcons_9: {fileID: 0}
-  switchSmallIcons_10: {fileID: 0}
-  switchSmallIcons_11: {fileID: 0}
-  switchSmallIcons_12: {fileID: 0}
-  switchSmallIcons_13: {fileID: 0}
-  switchSmallIcons_14: {fileID: 0}
-  switchSmallIcons_15: {fileID: 0}
+  switchIcons_0:
+    fileID: 0
+  switchIcons_1:
+    fileID: 0
+  switchIcons_2:
+    fileID: 0
+  switchIcons_3:
+    fileID: 0
+  switchIcons_4:
+    fileID: 0
+  switchIcons_5:
+    fileID: 0
+  switchIcons_6:
+    fileID: 0
+  switchIcons_7:
+    fileID: 0
+  switchIcons_8:
+    fileID: 0
+  switchIcons_9:
+    fileID: 0
+  switchIcons_10:
+    fileID: 0
+  switchIcons_11:
+    fileID: 0
+  switchIcons_12:
+    fileID: 0
+  switchIcons_13:
+    fileID: 0
+  switchIcons_14:
+    fileID: 0
+  switchIcons_15:
+    fileID: 0
+  switchSmallIcons_0:
+    fileID: 0
+  switchSmallIcons_1:
+    fileID: 0
+  switchSmallIcons_2:
+    fileID: 0
+  switchSmallIcons_3:
+    fileID: 0
+  switchSmallIcons_4:
+    fileID: 0
+  switchSmallIcons_5:
+    fileID: 0
+  switchSmallIcons_6:
+    fileID: 0
+  switchSmallIcons_7:
+    fileID: 0
+  switchSmallIcons_8:
+    fileID: 0
+  switchSmallIcons_9:
+    fileID: 0
+  switchSmallIcons_10:
+    fileID: 0
+  switchSmallIcons_11:
+    fileID: 0
+  switchSmallIcons_12:
+    fileID: 0
+  switchSmallIcons_13:
+    fileID: 0
+  switchSmallIcons_14:
+    fileID: 0
+  switchSmallIcons_15:
+    fileID: 0
   switchManualHTML: 
   switchAccessibleURLs: 
   switchLegalInformation: 
-  switchMainThreadStackSize: 1048576
+  switchMainThreadStackSize: 0
   switchPresenceGroupId: 
   switchLogoHandling: 0
   switchReleaseVersion: 0
-  switchDisplayVersion: 1.0.0
+  switchDisplayVersion: 
   switchStartupUserAccount: 0
   switchTouchScreenUsage: 0
   switchSupportedLanguagesMask: 0
@@ -446,8 +446,8 @@ PlayerSettings:
   switchUserAccountSaveDataSize: 0
   switchUserAccountSaveDataJournalSize: 0
   switchApplicationAttribute: 0
-  switchCardSpecSize: -1
-  switchCardSpecClock: -1
+  switchCardSpecSize: 0
+  switchCardSpecClock: 0
   switchRatingsMask: 0
   switchRatingsInt_0: 0
   switchRatingsInt_1: 0
@@ -471,47 +471,46 @@ PlayerSettings:
   switchLocalCommunicationIds_6: 
   switchLocalCommunicationIds_7: 
   switchParentalControl: 0
-  switchAllowsScreenshot: 1
-  switchAllowsVideoCapturing: 1
+  switchAllowsScreenshot: 0
+  switchAllowsVideoCapturing: 0
   switchAllowsRuntimeAddOnContentInstall: 0
   switchDataLossConfirmation: 0
   switchUserAccountLockEnabled: 0
-  switchSystemResourceMemory: 16777216
-  switchSupportedNpadStyles: 22
-  switchNativeFsCacheSize: 32
+  switchSystemResourceMemory: 0
+  switchSupportedNpadStyles: 0
+  switchNativeFsCacheSize: 0
   switchIsHoldTypeHorizontal: 0
-  switchSupportedNpadCount: 8
+  switchSupportedNpadCount: 0
   switchSocketConfigEnabled: 0
-  switchTcpInitialSendBufferSize: 32
-  switchTcpInitialReceiveBufferSize: 64
-  switchTcpAutoSendBufferSizeMax: 256
-  switchTcpAutoReceiveBufferSizeMax: 256
-  switchUdpSendBufferSize: 9
-  switchUdpReceiveBufferSize: 42
-  switchSocketBufferEfficiency: 4
-  switchSocketInitializeEnabled: 1
-  switchNetworkInterfaceManagerInitializeEnabled: 1
-  switchPlayerConnectionEnabled: 1
+  switchTcpInitialSendBufferSize: 0
+  switchTcpInitialReceiveBufferSize: 0
+  switchTcpAutoSendBufferSizeMax: 0
+  switchTcpAutoReceiveBufferSizeMax: 0
+  switchUdpSendBufferSize: 0
+  switchUdpReceiveBufferSize: 0
+  switchSocketBufferEfficiency: 0
+  switchSocketInitializeEnabled: 0
+  switchNetworkInterfaceManagerInitializeEnabled: 0
+  switchPlayerConnectionEnabled: 0
   switchUseNewStyleFilepaths: 0
-  switchUseLegacyFmodPriorities: 1
-  switchUseMicroSleepForYield: 1
+  switchUseMicroSleepForYield: 0
   switchEnableRamDiskSupport: 0
-  switchMicroSleepForYieldTime: 25
-  switchRamDiskSpaceSize: 12
-  ps4NPAgeRating: 12
+  switchMicroSleepForYieldTime: 0
+  switchRamDiskSpaceSize: 0
+  ps4NPAgeRating: 0
   ps4NPTitleSecret: 
   ps4NPTrophyPackPath: 
-  ps4ParentalLevel: 11
-  ps4ContentID: ED1633-NPXX51362_00-0000000000000000
+  ps4ParentalLevel: 0
+  ps4ContentID: 
   ps4Category: 0
-  ps4MasterVersion: 01.00
-  ps4AppVersion: 01.00
+  ps4MasterVersion: 
+  ps4AppVersion: 
   ps4AppType: 0
   ps4ParamSfxPath: 
   ps4VideoOutPixelFormat: 0
-  ps4VideoOutInitialWidth: 1920
-  ps4VideoOutBaseModeInitialWidth: 1920
-  ps4VideoOutReprojectionRate: 60
+  ps4VideoOutInitialWidth: 0
+  ps4VideoOutBaseModeInitialWidth: 0
+  ps4VideoOutReprojectionRate: 0
   ps4PronunciationXMLPath: 
   ps4PronunciationSIGPath: 
   ps4BackgroundImagePath: 
@@ -526,34 +525,34 @@ PlayerSettings:
   ps4PrivacyGuardImagePath: 
   ps4ExtraSceSysFile: 
   ps4NPtitleDatPath: 
-  ps4RemotePlayKeyAssignment: -1
+  ps4RemotePlayKeyAssignment: 0
   ps4RemotePlayKeyMappingDir: 
   ps4PlayTogetherPlayerCount: 0
-  ps4EnterButtonAssignment: 1
+  ps4EnterButtonAssignment: 0
   ps4ApplicationParam1: 0
   ps4ApplicationParam2: 0
   ps4ApplicationParam3: 0
   ps4ApplicationParam4: 0
   ps4DownloadDataSize: 0
-  ps4GarlicHeapSize: 2048
-  ps4ProGarlicHeapSize: 2560
-  playerPrefsMaxSize: 32768
-  ps4Passcode: frAQBc8Wsa1xVPfvJcrgRYwTiizs2trQ
-  ps4pnSessions: 1
-  ps4pnPresence: 1
-  ps4pnFriends: 1
-  ps4pnGameCustomData: 1
+  ps4GarlicHeapSize: 0
+  ps4ProGarlicHeapSize: 0
+  playerPrefsMaxSize: 0
+  ps4Passcode: 
+  ps4pnSessions: 0
+  ps4pnPresence: 0
+  ps4pnFriends: 0
+  ps4pnGameCustomData: 0
   playerPrefsSupport: 0
   enableApplicationExit: 0
-  resetTempFolder: 1
+  resetTempFolder: 0
   restrictedAudioUsageRights: 0
   ps4UseResolutionFallback: 0
   ps4ReprojectionSupport: 0
   ps4UseAudio3dBackend: 0
-  ps4UseLowGarlicFragmentationMode: 1
+  ps4UseLowGarlicFragmentationMode: 0
   ps4SocialScreenEnabled: 0
   ps4ScriptOptimizationLevel: 0
-  ps4Audio3dVirtualSpeakerCount: 14
+  ps4Audio3dVirtualSpeakerCount: 0
   ps4attribCpuUsage: 0
   ps4PatchPkgPath: 
   ps4PatchLatestPkgPath: 
@@ -569,28 +568,30 @@ PlayerSettings:
   ps4contentSearchFeaturesUsed: 0
   ps4CompatibilityPS5: 0
   ps4AllowPS5Detection: 0
-  ps4GPU800MHz: 1
+  ps4GPU800MHz: 0
   ps4attribEyeToEyeDistanceSettingVR: 0
   ps4IncludedModules: []
   ps4attribVROutputEnabled: 0
   monoEnv: 
-  splashScreenBackgroundSourceLandscape: {fileID: 0}
-  splashScreenBackgroundSourcePortrait: {fileID: 0}
-  blurSplashScreenBackground: 1
+  splashScreenBackgroundSourceLandscape:
+    fileID: 0
+  splashScreenBackgroundSourcePortrait:
+    fileID: 0
+  blurSplashScreenBackground: 0
   spritePackerPolicy: 
-  webGLMemorySize: 16
-  webGLExceptionSupport: 1
+  webGLMemorySize: 0
+  webGLExceptionSupport: 0
   webGLNameFilesAsHashes: 0
-  webGLDataCaching: 1
+  webGLDataCaching: 0
   webGLDebugSymbols: 0
   webGLEmscriptenArgs: 
   webGLModulesDirectory: 
-  webGLTemplate: APPLICATION:Default
+  webGLTemplate: 
   webGLAnalyzeBuildSize: 0
   webGLUseEmbeddedResources: 0
-  webGLCompressionFormat: 1
+  webGLCompressionFormat: 0
   webGLWasmArithmeticExceptions: 0
-  webGLLinkerTarget: 1
+  webGLLinkerTarget: 0
   webGLThreadsSupport: 0
   webGLDecompressionFallback: 0
   scriptingDefineSymbols: {}
@@ -600,27 +601,27 @@ PlayerSettings:
   il2cppCompilerConfiguration: {}
   managedStrippingLevel: {}
   incrementalIl2cppBuild: {}
-  suppressCommonWarnings: 1
+  suppressCommonWarnings: 0
   allowUnsafeCode: 0
-  useDeterministicCompilation: 1
-  useReferenceAssemblies: 1
-  enableRoslynAnalyzers: 1
+  useDeterministicCompilation: 0
+  useReferenceAssemblies: 0
+  enableRoslynAnalyzers: 0
   additionalIl2CppArgs: 
-  scriptingRuntimeVersion: 1
-  gcIncremental: 1
-  assemblyVersionValidation: 1
+  scriptingRuntimeVersion: 0
+  gcIncremental: 0
+  assemblyVersionValidation: 0
   gcWBarrierValidation: 0
   apiCompatibilityLevelPerPlatform: {}
-  m_RenderingPath: 1
-  m_MobileRenderingPath: 1
-  metroPackageName: Template_3D
+  m_RenderingPath: 0
+  m_MobileRenderingPath: 0
+  metroPackageName: 
   metroPackageVersion: 
   metroCertificatePath: 
   metroCertificatePassword: 
   metroCertificateSubject: 
   metroCertificateIssuer: 
-  metroCertificateNotAfter: 0000000000000000
-  metroApplicationDescription: Template_3D
+  metroCertificateNotAfter: 0
+  metroApplicationDescription: 
   wsaImages: {}
   metroTileShortName: 
   metroTileShowName: 0
@@ -629,10 +630,18 @@ PlayerSettings:
   metroWideTileShowName: 0
   metroSupportStreamingInstall: 0
   metroLastRequiredScene: 0
-  metroDefaultTileSize: 1
-  metroTileForegroundText: 2
-  metroTileBackgroundColor: {r: 0.13333334, g: 0.17254902, b: 0.21568628, a: 0}
-  metroSplashScreenBackgroundColor: {r: 0.12941177, g: 0.17254902, b: 0.21568628, a: 1}
+  metroDefaultTileSize: 0
+  metroTileForegroundText: 0
+  metroTileBackgroundColor:
+    r: 0
+    g: 0
+    b: 0
+    a: 0
+  metroSplashScreenBackgroundColor:
+    r: 0
+    g: 0
+    b: 0
+    a: 0
   metroSplashScreenUseBackgroundColor: 0
   platformCapabilities: {}
   metroTargetDeviceFamilies: {}
@@ -649,44 +658,44 @@ PlayerSettings:
   XboxOneGameOsOverridePath: 
   XboxOnePackagingOverridePath: 
   XboxOneAppManifestOverridePath: 
-  XboxOneVersion: 1.0.0.0
+  XboxOneVersion: 
   XboxOnePackageEncryption: 0
-  XboxOnePackageUpdateGranularity: 2
+  XboxOnePackageUpdateGranularity: 0
   XboxOneDescription: 
-  XboxOneLanguage:
-  - enus
+  XboxOneLanguage: []
   XboxOneCapability: []
   XboxOneGameRating: {}
   XboxOneIsContentPackage: 0
   XboxOneEnhancedXboxCompatibilityMode: 0
-  XboxOneEnableGPUVariability: 1
+  XboxOneEnableGPUVariability: 0
   XboxOneSockets: {}
-  XboxOneSplashScreen: {fileID: 0}
+  XboxOneSplashScreen:
+    fileID: 0
   XboxOneAllowedProductIds: []
   XboxOnePersistentLocalStorageSize: 0
-  XboxOneXTitleMemory: 8
+  XboxOneXTitleMemory: 0
   XboxOneOverrideIdentityName: 
   XboxOneOverrideIdentityPublisher: 
-  vrEditorSettings: {}
-  cloudServicesEnabled:
-    UNet: 1
+  vrEditorSettings:
+    none: {}
+  cloudServicesEnabled: {}
   luminIcon:
     m_Name: 
     m_ModelFolderPath: 
     m_PortalFolderPath: 
   luminCert:
     m_CertPath: 
-    m_SignPackage: 1
+    m_SignPackage: 0
   luminIsChannelApp: 0
   luminVersion:
-    m_VersionCode: 1
+    m_VersionCode: 0
     m_VersionName: 
-  apiCompatibilityLevel: 6
-  activeInputHandler: 2
-  windowsGamepadBackendHint: 0
+  apiCompatibilityLevel: 0
+  activeInputHandler: 0
   cloudProjectId: 
   framebufferDepthMemorylessMode: 0
-  qualitySettingsNames: []
+  qualitySettingsNames:
+  - Default
   projectName: 
   organizationId: 
   cloudEnabled: 0

@@ -94,7 +94,11 @@
     <Compile Include="..\Basements_Unity\Assets\Scripts\Basement.cs">
       <Link>MonoScripts\Basement.cs</Link>
     </Compile>
+    <Compile Include="..\Basements_Unity\Assets\Scripts\ShaderReplacerNew.cs">
+      <Link>MonoScripts\ShaderReplacerNew.cs</Link>
+    </Compile>
     <Compile Include="ModCore.cs" />
+    <Compile Include="MonoScripts\Basement_Teleport.cs" />
     <Compile Include="Patches\Character_Patches.cs" />
     <Compile Include="Patches\EnvMan_Patches.cs" />
     <Compile Include="Patches\Piece_Patches.cs" />
