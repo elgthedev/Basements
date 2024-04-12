@@ -36,10 +36,6 @@ namespace Basements
         public bool CanBeRemoved()
         {
             var ol = Physics.OverlapBox(interiorBounds.center, interiorBounds.extents).Where(x => !localColliders.Contains(x));
-            foreach (var item in ol)
-            {
-                Debug.LogError(item.name + " is preventing basement from being destroyed");
-            }
             return !ol.Any();            
         } 
     }
