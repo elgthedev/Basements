@@ -14,7 +14,7 @@ namespace Basements
     public class BasementsMod : BaseUnityPlugin
     {
         private const string ModName = "Basement";
-        internal const string ModVersion = "1.1.5";
+        internal const string ModVersion = "1.1.6";
         private const string ModGUID = "com.rolopogo.Basement";
         private static Harmony harmony = null!;
         internal static ManualLogSource basementLogger = new ManualLogSource(ModName);
