@@ -1,6 +1,8 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Reflection;
 using BepInEx;
 using BepInEx.Configuration;
+using BepInEx.Logging;
 using HarmonyLib;
 using PieceManager;
 using ServerSync;
@@ -12,9 +14,10 @@ namespace Basements
     public class BasementsMod : BaseUnityPlugin
     {
         private const string ModName = "Basement";
-        internal const string ModVersion = "1.1.0";
+        internal const string ModVersion = "1.1.5";
         private const string ModGUID = "com.rolopogo.Basement";
         private static Harmony harmony = null!;
+        internal static ManualLogSource basementLogger = new ManualLogSource(ModName);
         ConfigSync configSync = new(ModGUID) 
             { DisplayName = ModName, CurrentVersion = ModVersion, MinimumRequiredVersion = ModVersion};
         internal static ConfigEntry<bool> ServerConfigLocked = null!;
@@ -30,8 +33,14 @@ namespace Basements
         ConfigEntry<T> config<T>(string group, string name, T value, string description, bool synchronizedSetting = true) => config(group, name, value, new ConfigDescription(description), synchronizedSetting);
        
         internal static ConfigEntry<int> MaxNestedLimit = null!;
-        private static GameObject basementPrefab { get; set; }
-        
+        [SerializeField] private static GameObject _basementPrefab;
+
+        internal static GameObject BasementPrefab
+        {
+            get => _basementPrefab;
+            set => _basementPrefab = value;
+        }
+
         public void Awake()
         {
             Assembly assembly = Assembly.GetExecutingAssembly();
@@ -50,11 +59,50 @@ namespace Basements
             buildPiece.Description.English("A nice cool underground storage room for your things");
             buildPiece.RequiredItems.Add("Stone", 200, recover: false);
             buildPiece.RequiredItems.Add("Wood", 100, recover: false);
-            buildPiece.Category.Add(BuildPieceCategory.Misc);
+            buildPiece.Category.Set(BuildPieceCategory.Misc);
             buildPiece.Crafting.Set(CraftingTable.StoneCutter);
-            basementPrefab = buildPiece.Prefab.gameObject;
-            MaterialReplacer.RegisterGameObjectForMatSwap(basementPrefab);
+            BasementPrefab = buildPiece.Prefab.gameObject;
+            MaterialReplacer.RegisterGameObjectForMatSwap(BasementPrefab);
+            basementLogger = Logger;
             //buildPiece.SpecialProperties = new SpecialProperties() { AdminOnly = true, NoConfig = true}; // You can declare multiple properties in one line           
         }
+        
+        internal static void WriteLog(string text, WarnLevel level)
+        {
+            switch (level)
+            {
+                case WarnLevel.All:
+                    System.Console.BackgroundColor = ConsoleColor.DarkGray;
+                    basementLogger.LogMessage(text);
+                    System.Console.ResetColor();
+                    break;
+                case WarnLevel.Error:
+                    System.Console.BackgroundColor = ConsoleColor.DarkRed;
+                    basementLogger.LogMessage(text);
+                    System.Console.ResetColor();
+                    break;
+                case WarnLevel.Warn:
+                    System.Console.BackgroundColor = ConsoleColor.Yellow;
+                    basementLogger.LogMessage(text);
+                    System.Console.ResetColor();
+                    break;
+                case WarnLevel.Info:
+                    System.Console.BackgroundColor = ConsoleColor.Black;
+                    basementLogger.LogMessage(text);
+                    System.Console.ResetColor();
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(level), level, null);
+            }
+           
+        }
+    }
+
+    enum WarnLevel
+    {
+        All,
+        Error,
+        Warn,
+        Info
     }
 }

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Reflection.Emit;
 using HarmonyLib;
 using UnityEngine;
 //EnvMan.instance.CheckInteriorBuildingOverride())
@@ -31,22 +33,18 @@ namespace Basements.Patches
                     basementEnv.m_alwaysDark = false;
                     basementEnv.m_ambientList = "Basement";
                     EnvMan.instance.m_environments.Add(basementEnv);
+                    
+                    var sfxstone = ZNetScene.instance.GetPrefab("sfx_build_hammer_stone");
+                    var vfxstone = ZNetScene.instance.GetPrefab("vfx_Place_stone_wall_2x1");
+                 
+                    EffectList buildStone = new EffectList { m_effectPrefabs = new EffectList.EffectData[2] { new EffectList.EffectData { m_prefab = sfxstone }, new EffectList.EffectData { m_prefab = vfxstone } } };
+               
+                    var pc = BasementsMod.BasementPrefab.GetComponent<Piece>();
+                    pc.m_placeEffect = buildStone;
+                    EnvMan.instance.m_interiorBuildingOverrideEnvironments.Add("Basement");
                 }
 
            
-        }
-    }
-
-    [HarmonyPatch(typeof(EnvMan), nameof(EnvMan.CheckInteriorBuildingOverride))]
-    static class EnvMan_Patches
-    {
-        public static void Postfix(EnvMan __instance, ref bool __result)
-        {
-            if (__instance.GetCurrentEnvironment().m_name.StartsWith("Basement"))
-            {
-                __result = true;
-                Player.m_localPlayer.m_placementStatus = Player.PlacementStatus.Valid;
-            }
         }
     }
 }

@@ -13,6 +13,7 @@ namespace Basements.Patches
     {
         const float overlapRadius = 60;
 
+        [HarmonyPostfix]
         static void Postfix(Player __instance, GameObject ___m_placementGhost)
         {
             if (!___m_placementGhost) return;
@@ -22,7 +23,7 @@ namespace Basements.Patches
             Type type = typeof(Player).Assembly.GetType("Player+PlacementStatus");
             object moreSpace = type.GetField("MoreSpace").GetValue(__instance);
             FieldInfo statusField = __instance.GetType()
-                .GetField("m_placementStatus", BindingFlags.NonPublic | BindingFlags.Instance);
+                .GetField("m_placementStatus", BindingFlags.NonPublic | BindingFlags.Instance)!;
             var ol = Basement.allBasements
                 .Where(x => Vector3.Distance(x.transform.position, ___m_placementGhost.transform.position) <
                             overlapRadius).Where(x => x.gameObject != ___m_placementGhost);
@@ -34,7 +35,7 @@ namespace Basements.Patches
         }
 
         [HarmonyTranspiler]
-        static IEnumerable<CodeInstruction> UpdatePlacementGhostTranspiler(IEnumerable<CodeInstruction> instructions)
+        static IEnumerable<CodeInstruction> HeightmapNullTranspiler(IEnumerable<CodeInstruction> instructions)
         {
             return new CodeMatcher(instructions)
                 .MatchForward(
@@ -65,10 +66,10 @@ namespace Basements.Patches
                 .InsertAndAdvance(Transpilers.EmitDelegate<Func<bool, bool>>(HeightmapIsNullBasemementDelegate))
                 .InstructionEnumeration();
         }
-
+        
         static bool HeightmapIsNullBasemementDelegate(bool isEqual)
         {
-            if (EnvMan.m_instance.GetCurrentEnvironment().m_name == "Basement")
+            if (EnvMan.instance.GetCurrentEnvironment().m_name == "Basement")
             {
                 return false;
             }
