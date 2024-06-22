@@ -1,47 +1,26 @@
 # Basement
-Expand into the earth with this placeable basement
+Expand into the earth with this placeable basement.
 
-- Adds a new item to the misc tab in the hammer build menu, "Basement"
-- Costs 100 stone, 100 wood, and requires a nearby stonecutting table
-- Place basements within basements (up to 5 times)
-- Personalise your basement with unrestricted building inside
+## Features
+- Adds a new item to the misc tab in the hammer build menu, "Basement".
+- Costs 100 stone, 100 wood, and requires a nearby stonecutting table.
+- Place basements within basements (up to 5 times).
+- Personalize your basement with unrestricted building inside.
 
-Sample Video: https://streamable.com/t5cizh https://streamable.com/bix98w
-Source: https://github.com/sbtoonz/Basements
+## Sample Videos
+- [Video 1](https://streamable.com/t5cizh)
+- [Video 2](https://streamable.com/bix98w)
 
-Install with BepInEx
+## Source
+This is a re-upload to support the mod in the Ashlands update, since the old mantainers are not available to do it.
 
-Copy Basement.dll into Valheim/BepInEx/plugins
+The source code is available on GitHub: [Basements](https://github.com/elgthedev/Basements)
 
-<details>
-<summary> ChangeLog</summary>
+## Installation Notes
 
+### Using a Mod Manager
+1. Install this mod using your Mod Manager.
 
-## V1.0.3:
-* Change from Valheimlib -> JVL lib as Valheimlib is defunct.
-
-## V1.0.4
-* Made recipe requirements configurable volumes
-
-## V1.0.5
-* Revamped
-
-## V1.0.6
-* fixed nesting limit
-
-## V1.0.7
-* Fixed for caves update
-
-
-## V1.0.8
-* Fixed compat issue with comfy gizmo (Thx redseiko)
-
-### V1.0.9
-* Fixed compat issue with undercroft and v+ (thx redseiko)
-
-
-### V1.1.0
-* Mistlands compatibility
-
-
-</details>
+### Manual Installation (Without Mod Manager)
+1. Install *BepInEx* per the instructions at: [BepInExPack_Valheim](https://valheim.thunderstore.io/package/denikson/BepInExPack_Valheim/)
+2. Place **Basements.dll** into your **Valheim\BepInEx\plugins** folder.
