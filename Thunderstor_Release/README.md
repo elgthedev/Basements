@@ -3,7 +3,7 @@ Expand into the earth with this placeable basement.
 
 ## Features
 - Adds a new item to the misc tab in the hammer build menu, "Basement".
-- Costs 100 stone, 100 wood, and requires a nearby stonecutting table.
+- Costs 200 stone, 100 wood by default, and requires a nearby stonecutting table.
 - Place basements within basements (up to 5 times).
 - Personalize your basement with unrestricted building inside.
 
@@ -13,6 +13,8 @@ Expand into the earth with this placeable basement.
 
 ## Source
 This is a re-upload to support the mod in the Ashlands update, since the old mantainers are not available to do it.
+
+Reuploaded by Elg. 
 
 The source code is available on GitHub: [Basements](https://github.com/elgthedev/Basements)
 

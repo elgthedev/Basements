@@ -4,6 +4,6 @@
     "website_url": "",
     "description": "Expand into the earth with this placeable basement. Fixed for Ashlands update.",
     "dependencies": [ 
-		"denikson-BepInExPack_Valheim-5.4.2202"
+		  "denikson-BepInExPack_Valheim-5.4.2202"
     ]
 }
