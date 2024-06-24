@@ -14,7 +14,7 @@ Expand into the earth with this placeable basement.
 ## Source
 This is a re-upload to support the mod in the Ashlands update, since the old mantainers are not available to do it.
 
-Reuploaded by Elg. 
+Reuploaded by Elg, authorized by the previous mantainer and under the MIT License. 
 
 The source code is available on GitHub: [Basements](https://github.com/elgthedev/Basements)
 
