@@ -1,9 +1,9 @@
 {
-    "name": "BasementJVLedition",
-    "version_number": "1.0.9",
-    "website_url": "https://github.com/rolopogo/ValheimMods/pull/36",
-    "description": "Expand into the earth with this placeable basement",
+    "name": "Basements",
+    "version_number": "1.1.8",
+    "website_url": "https://github.com/elgthedev/Basements",
+    "description": "Expand into the earth with this placeable basement. Fixed for Ashlands update.",
     "dependencies": [ 
-		"denikson-BepInExPack_Valheim-5.4.1900"
+		  "denikson-BepInExPack_Valheim-5.4.2202"
     ]
 }
