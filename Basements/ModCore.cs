@@ -1,9 +1,11 @@
 ﻿using System;
+using System.IO;
 using System.Reflection;
 using BepInEx;
 using BepInEx.Configuration;
 using BepInEx.Logging;
 using HarmonyLib;
+using JetBrains.Annotations;
 using PieceManager;
 using ServerSync;
 using UnityEngine;
@@ -16,22 +18,12 @@ namespace Basements
         internal const string ModName = "Basements";
         internal const string ModVersion = "1.1.9";
         private const string ModGUID = "com.rolopogo.Basement"; // GUID kept
-        private static Harmony harmony = null!;
-        internal static ManualLogSource basementLogger = new ManualLogSource(ModName);
-        ConfigSync configSync = new(ModGUID) 
-            { DisplayName = ModName, CurrentVersion = ModVersion, MinimumRequiredVersion = ModVersion};
-        internal static ConfigEntry<bool> ServerConfigLocked = null!;
-        ConfigEntry<T> config<T>(string group, string name, T value, ConfigDescription description, bool synchronizedSetting = true)
-        {
-            ConfigEntry<T> configEntry = Config.Bind(group, name, value, description);
+        internal static ManualLogSource _basementLogger = new ManualLogSource(ModName);
+        private static string _configFileName = ModGUID + ".cfg";
+        private static string _configFileFullPath = Paths.ConfigPath + Path.DirectorySeparatorChar + _configFileName;
+        private readonly Harmony _harmony = new(ModGUID);
 
-            SyncedConfigEntry<T> syncedConfigEntry = configSync.AddConfigEntry(configEntry);
-            syncedConfigEntry.SynchronizedConfig = synchronizedSetting;
-
-            return configEntry;
-        }
-        ConfigEntry<T> config<T>(string group, string name, T value, string description, bool synchronizedSetting = true) => config(group, name, value, new ConfigDescription(description), synchronizedSetting);
-       
+        internal static ConfigEntry<bool> ServerConfigLocked = null!;       
         internal static ConfigEntry<int> MaxNestedLimit = null!;
         [SerializeField] private static GameObject _basementPrefab;
 
@@ -44,10 +36,9 @@ namespace Basements
         public void Awake()
         {
             Assembly assembly = Assembly.GetExecutingAssembly();
-            harmony = new(ModGUID);
-            harmony.PatchAll(assembly);
+            _harmony.PatchAll(assembly);
             ServerConfigLocked = config("1 - General", "Lock Configuration", true, "If on, the configuration is locked and can be changed by server admins only.");
-            configSync.AddLockingConfigEntry(ServerConfigLocked);
+            ConfigSync.AddLockingConfigEntry(ServerConfigLocked);
             
             MaxNestedLimit = config("1 - General", "Max nested basements", 5,
                 "The maximum number of basements you can incept into each other");
@@ -64,33 +55,67 @@ namespace Basements
             buildPiece.Category.Set(BuildPieceCategory.Misc);
             buildPiece.Crafting.Set(CraftingTable.StoneCutter);
 
+            _basementLogger = Logger;
+
             BasementPrefab = buildPiece.Prefab.gameObject;
             MaterialReplacer.RegisterGameObjectForMatSwap(BasementPrefab);
-            basementLogger = Logger;
+
+            SetupWatcher();
         }
-        
+
+        private void OnDestroy()
+        {
+            Config.Save();
+        }
+
+        private void SetupWatcher()
+        {
+            FileSystemWatcher watcher = new(Paths.ConfigPath, _configFileName);
+            watcher.Changed += ReadConfigValues;
+            watcher.Created += ReadConfigValues;
+            watcher.Renamed += ReadConfigValues;
+            watcher.IncludeSubdirectories = true;
+            watcher.SynchronizingObject = ThreadingHelper.SynchronizingObject;
+            watcher.EnableRaisingEvents = true;
+        }
+
+        private void ReadConfigValues(object sender, FileSystemEventArgs e)
+        {
+            if (!File.Exists(_configFileFullPath)) return;
+            try
+            {
+                _basementLogger.LogDebug("ReadConfigValues called");
+                Config.Reload();
+            }
+            catch
+            {
+                _basementLogger.LogError($"There was an issue loading your {_configFileName}");
+                _basementLogger.LogError("Please check your config entries for spelling and format!");
+            }
+        }
+
         internal static void WriteLog(string text, WarnLevel level)
         {
             switch (level)
             {
                 case WarnLevel.All:
                     System.Console.BackgroundColor = ConsoleColor.DarkGray;
-                    basementLogger.LogMessage(text);
+                    _basementLogger.LogMessage(text);
                     System.Console.ResetColor();
                     break;
                 case WarnLevel.Error:
                     System.Console.BackgroundColor = ConsoleColor.DarkRed;
-                    basementLogger.LogMessage(text);
+                    _basementLogger.LogMessage(text);
                     System.Console.ResetColor();
                     break;
                 case WarnLevel.Warn:
                     System.Console.BackgroundColor = ConsoleColor.Yellow;
-                    basementLogger.LogMessage(text);
+                    _basementLogger.LogMessage(text);
                     System.Console.ResetColor();
                     break;
                 case WarnLevel.Info:
                     System.Console.BackgroundColor = ConsoleColor.Black;
-                    basementLogger.LogMessage(text);
+                    _basementLogger.LogMessage(text);
                     System.Console.ResetColor();
                     break;
                 default:
@@ -98,6 +123,40 @@ namespace Basements
             }
            
         }
+
+        private ConfigEntry<T> config<T>(string group, string name, T value, ConfigDescription description,
+            bool synchronizedSetting = true)
+        {
+            ConfigDescription extendedDescription =
+                new(
+                    description.Description + (synchronizedSetting
+                        ? " [Synced with Server]"
+                        : " [Not Synced with Server]"), description.AcceptableValues,
+                    description.Tags);
+            var configEntry = Config.Bind(group, name, value, extendedDescription);
+
+            var syncedConfigEntry = ConfigSync.AddConfigEntry(configEntry);
+            syncedConfigEntry.SynchronizedConfig = synchronizedSetting;
+
+            return configEntry;
+        }
+
+        private ConfigEntry<T> config<T>(string group, string name, T value, string description,
+            bool synchronizedSetting = true)
+        {
+            return config(group, name, value, new ConfigDescription(description), synchronizedSetting);
+        }
+
+        private class ConfigurationManagerAttributes
+        {
+            [UsedImplicitly] public int? Order;
+            [UsedImplicitly] public bool? Browsable;
+            [UsedImplicitly] public string? Category;
+            [UsedImplicitly] public Action<ConfigEntryBase>? CustomDrawer;
+        }
+
+        private static readonly ConfigSync ConfigSync = new(ModGUID)
+        { DisplayName = ModName, CurrentVersion = ModVersion, MinimumRequiredVersion = ModVersion };
     }
 
     enum WarnLevel

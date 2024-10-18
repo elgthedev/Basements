@@ -22,13 +22,9 @@ namespace Basements.Patches
             if (Basement.allBasements.Count <= 0) return;
             Type type = typeof(Player).Assembly.GetType("Player+PlacementStatus");
             object moreSpace = type.GetField("MoreSpace").GetValue(__instance);
-            FieldInfo statusField = __instance.GetType()
-                .GetField("m_placementStatus", BindingFlags.NonPublic | BindingFlags.Instance)!;
-            var ol = Basement.allBasements
-                .Where(x => Vector3.Distance(x.transform.position, ___m_placementGhost.transform.position) <
-                            overlapRadius).Where(x => x.gameObject != ___m_placementGhost);
-            if (ol.Any(x => x.GetComponentInParent<Basement>()) || ___m_placementGhost.transform.position.y >
-                2500 * Mathf.Max(BasementsMod.MaxNestedLimit.Value, 0) + 2000)
+            FieldInfo statusField = __instance.GetType().GetField("m_placementStatus", BindingFlags.NonPublic | BindingFlags.Instance);
+            var ol = Basement.allBasements.Where(x => Vector3.Distance(x.transform.position, ___m_placementGhost.transform.position) < overlapRadius).Where(x => x.gameObject != ___m_placementGhost);
+            if (ol.Any(x => x.GetComponentInParent<Basement>()) || ___m_placementGhost.transform.position.y > 2500 * Mathf.Max(BasementsMod.MaxNestedLimit.Value, 0) + 2000)
             {
                 statusField.SetValue(__instance, moreSpace);
             }

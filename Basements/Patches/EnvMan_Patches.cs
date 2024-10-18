@@ -16,7 +16,9 @@ namespace Basements.Patches
                 {
                     EnvSetup basementEnv = EnvMan.instance.m_environments.Find(x => x.m_name == "Crypt").Clone();
                     basementEnv.m_name = "Basement";
-                    basementEnv.m_psystems = Array.Empty<GameObject>();
+                    basementEnv.m_ambientVol = 0;
+                    basementEnv.m_windMax = 0;
+                    basementEnv.m_windMin = 0;
                     basementEnv.m_rainCloudAlpha = 0;
                     basementEnv.m_fogDensityDay = 0;
                     basementEnv.m_fogDensityEvening = 0;
@@ -30,8 +32,8 @@ namespace Basements.Patches
                     basementEnv.m_fogColorSunEvening = Color.clear;
                     basementEnv.m_fogColorSunMorning = Color.clear;
                     basementEnv.m_fogColorSunNight = Color.clear;
-                    basementEnv.m_alwaysDark = false;
                     basementEnv.m_ambientList = "Basement";
+                    basementEnv.m_psystems = Array.Empty<GameObject>();
                     EnvMan.instance.m_environments.Add(basementEnv);
                     
                     var sfxstone = ZNetScene.instance.GetPrefab("sfx_build_hammer_stone");
