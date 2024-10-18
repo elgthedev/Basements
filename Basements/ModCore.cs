@@ -14,7 +14,7 @@ namespace Basements
     public class BasementsMod : BaseUnityPlugin
     {
         internal const string ModName = "Basements";
-        internal const string ModVersion = "1.1.8";
+        internal const string ModVersion = "1.1.9";
         private const string ModGUID = "com.rolopogo.Basement"; // GUID kept
         private static Harmony harmony = null!;
         internal static ManualLogSource basementLogger = new ManualLogSource(ModName);
@@ -49,22 +49,24 @@ namespace Basements
             ServerConfigLocked = config("1 - General", "Lock Configuration", true, "If on, the configuration is locked and can be changed by server admins only.");
             configSync.AddLockingConfigEntry(ServerConfigLocked);
             
-            MaxNestedLimit = config("General", "Max nested basements", 1,
+            MaxNestedLimit = config("1 - General", "Max nested basements", 5,
                 "The maximum number of basements you can incept into each other");
 
             BuildPiece buildPiece = new BuildPiece("basement", "Basement");
             buildPiece.Name.English("Basement");
             buildPiece.Name.Russian("Подвал");
+            buildPiece.Name.Portuguese_Brazilian("Porão");
             buildPiece.Description.Russian("Хороший и прохладный подвал для ваших вещей");
             buildPiece.Description.English("A nice cool underground storage room for your things");
-            buildPiece.RequiredItems.Add("Stone", 200, recover: false);
-            buildPiece.RequiredItems.Add("Wood", 100, recover: false);
+            buildPiece.Description.Portuguese_Brazilian("Um compacto e seguro depósito subterrâneo");
+            buildPiece.RequiredItems.Add("Stone", 200, recover: true);
+            buildPiece.RequiredItems.Add("Wood", 100, recover: true);
             buildPiece.Category.Set(BuildPieceCategory.Misc);
             buildPiece.Crafting.Set(CraftingTable.StoneCutter);
+
             BasementPrefab = buildPiece.Prefab.gameObject;
             MaterialReplacer.RegisterGameObjectForMatSwap(BasementPrefab);
             basementLogger = Logger;
-            //buildPiece.SpecialProperties = new SpecialProperties() { AdminOnly = true, NoConfig = true}; // You can declare multiple properties in one line           
         }
         
         internal static void WriteLog(string text, WarnLevel level)
