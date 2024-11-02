@@ -26,3 +26,6 @@ The source code is available on GitHub: [Basements](https://github.com/elgthedev
 ### Manual Installation (Without Mod Manager)
 1. Install *BepInEx* per the instructions at: [BepInExPack_Valheim](https://valheim.thunderstore.io/package/denikson/BepInExPack_Valheim/)
 2. Place **Basements.dll** into your **Valheim\BepInEx\plugins** folder.
+
+## Liked the mod?
+Let me know by clicking the like or endorse button also [on Nexus](https://www.nexusmods.com/valheim/mods/2894), it's free!
