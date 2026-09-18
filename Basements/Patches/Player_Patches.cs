@@ -20,20 +20,22 @@ namespace Basements.Patches
             var basementComponent = ___m_placementGhost.GetComponent<Basement>();
             if (!basementComponent) return;
             if (Basement.allBasements.Count <= 0) return;
-            Type type = typeof(Player).Assembly.GetType("Player+PlacementStatus");
-            object moreSpace = type.GetField("MoreSpace").GetValue(__instance);
-            FieldInfo statusField = __instance.GetType().GetField("m_placementStatus", BindingFlags.NonPublic | BindingFlags.Instance);
+            Type? type = typeof(Player).Assembly.GetType("Player+PlacementStatus");
+            FieldInfo? moreSpaceField = type == null ? null : AccessTools.Field(type, "MoreSpace");
+            FieldInfo? statusField = AccessTools.Field(typeof(Player), "m_placementStatus");
+            if (moreSpaceField == null || statusField == null) return;
+            object moreSpace = moreSpaceField.GetValue(null)!;
             var ol = Basement.allBasements.Where(x => Vector3.Distance(x.transform.position, ___m_placementGhost.transform.position) < overlapRadius).Where(x => x.gameObject != ___m_placementGhost);
             if (ol.Any(x => x.GetComponentInParent<Basement>()) || ___m_placementGhost.transform.position.y > 2500 * Mathf.Max(BasementsMod.MaxNestedLimit.Value, 0) + 2000)
             {
-                statusField.SetValue(__instance, moreSpace);
+            statusField.SetValue(__instance, moreSpace);
             }
         }
 
         [HarmonyTranspiler]
         static IEnumerable<CodeInstruction> HeightmapNullTranspiler(IEnumerable<CodeInstruction> instructions)
         {
-            return new CodeMatcher(instructions)
+            CodeMatcher matcher = new CodeMatcher(instructions)
                 .MatchForward(
                     useEnd: false,
                     new CodeMatch(OpCodes.Ldfld, AccessTools.Field(typeof(Piece), nameof(Piece.m_groundPiece))),
@@ -60,7 +62,9 @@ namespace Basements.Patches
                             new Type[] { typeof(UnityEngine.Object), typeof(UnityEngine.Object) })))
                 .Advance(offset: 5)
                 .InsertAndAdvance(Transpilers.EmitDelegate<Func<bool, bool>>(HeightmapIsNullBasemementDelegate))
-                .InstructionEnumeration();
+                ;
+            if (!matcher.IsValid) return instructions;
+            return matcher.InstructionEnumeration();
         }
         
         static bool HeightmapIsNullBasemementDelegate(bool isEqual)

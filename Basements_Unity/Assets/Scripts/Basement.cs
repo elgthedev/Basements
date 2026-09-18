@@ -24,7 +24,7 @@ namespace Basements
                 BoundsObject = transform.Find("Bounds").gameObject;
                 box = BoundsObject.GetComponent<BoxCollider>();
             }
-            BoundsObject.layer = 4; // Allows building without disabling zone detection, idk what this layer is actually for
+            BoundsObject.layer = 4; // Allows building without disabling zone detection, idk what this layer is actually for 
             interiorBounds = box.bounds;
         }
 
@@ -36,7 +36,12 @@ namespace Basements
         public bool CanBeRemoved()
         {
             var ol = Physics.OverlapBox(interiorBounds.center, interiorBounds.extents).Where(x => !localColliders.Contains(x));
-            return !ol.Any();            
+            IEnumerable<Collider> enumerable = ol.ToList();
+            foreach (var item in enumerable)
+            {
+                Debug.Log(item.name + " is preventing basement from being destroyed");
+            }
+            return !enumerable.Any();
         } 
     }
 }

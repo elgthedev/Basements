@@ -1,31 +1,53 @@
-# Basement
-Expand into the earth with this placeable basement.
+# Basements
+
+Expand into the earth with a placeable basement.
+
+**Compatible with Valheim 1.0 Deep North Update.**
 
 ## Features
-- Adds a new item to the misc tab in the hammer build menu, "Basement".
-- Costs 200 stone, 100 wood by default, and requires a nearby stonecutting table.
-- Place basements within basements (up to 5 times).
-- Personalize your basement with unrestricted building inside.
 
-## Sample Videos
+- Adds **Basement** to the hammer's **Misc.** build category.
+- Costs 200 Stone and 100 Wood, and requires a nearby Stonecutter.
+- Supports nested basements; the default limit is five levels.
+- Allows unrestricted building inside the basement.
+- Returns its construction materials when dismantled after its interior is clear.
+
+## Install
+
+**Recommended:** install with [Gale](https://hexium.gg/mod-manager). Gale supports both the Hexium and Thunderstore catalogs and can import existing mod-manager profiles.
+
+**Manual:** install [BepInExPack Valheim](https://valheim.hexium.gg/mods/denikson/BepInExPack_Valheim), then place `Basements.dll` in `Valheim/BepInEx/plugins/`.
+
+## Configuration
+
+The config file is `BepInEx/config/com.rolopogo.Basement.cfg`.
+
+For an in-game settings menu, optionally install [BepInEx Configuration Manager](https://valheim.hexium.gg/mods/Azumatt/Official_BepInEx_ConfigurationManager) and press F1.
+
+| Setting | Default | Description |
+| --- | ---: | --- |
+| `Lock Configuration` | `true` | When enabled, server administrators control synchronized settings. |
+| `Max nested basements` | `5` | The maximum number of basement levels that can be placed inside one another. |
+
+Settings reload when the config file changes. Basements uses ServerSync: install the same package on a server when you want the server configuration to apply to every player. ServerSync is included in Basements; do not install a separate `ServerSync.dll`.
+
+## Compatibility
+
+Basements works alongside [QuickTeleport](https://valheim.hexium.gg/mods/OdinPlus/QuickTeleport). QuickTeleport changes portal and dungeon travel timing; it does not change basement placement or construction behavior.
+
+## Troubleshooting
+
+- If Basement is missing from the hammer, confirm that `Basements.dll` is under `BepInEx/plugins/`, then look in the hammer's **Misc.** category and check the BepInEx log for `Basements`.
+- If nesting stops earlier than expected, check `Max nested basements` in the config file or Configuration Manager.
+- When `Lock Configuration` is enabled, change synchronized settings on the server.
+
+## Videos
+
 - [Video 1](https://streamable.com/t5cizh)
 - [Video 2](https://streamable.com/bix98w)
 
-## Source
-This is a re-upload to support the mod in the Ashlands update, since the old mantainers are not available to do it.
+## Source and support
 
-Reuploaded by Elg, authorized by the previous mantainer and under the MIT License. 
+Maintained by the OdinPlus team under the MIT License. Source code: [Basements on GitHub](https://github.com/elgthedev/Basements).
 
-The source code is available on GitHub: [Basements](https://github.com/elgthedev/Basements)
-
-## Installation Notes
-
-### Using a Mod Manager
-1. Install this mod using your Mod Manager.
-
-### Manual Installation (Without Mod Manager)
-1. Install *BepInEx* per the instructions at: [BepInExPack_Valheim](https://valheim.thunderstore.io/package/denikson/BepInExPack_Valheim/)
-2. Place **Basements.dll** into your **Valheim\BepInEx\plugins** folder.
-
-## Liked the mod?
-Let me know by clicking the like or endorse button also [on Nexus](https://www.nexusmods.com/valheim/mods/2894), it's free!
+Install through Gale to use the same Basements package from either catalog. Find the mod on [Hexium](https://valheim.hexium.gg/mods/OdinPlus/Basements) or [endorse it on Nexus Mods](https://www.nexusmods.com/valheim/mods/2894).

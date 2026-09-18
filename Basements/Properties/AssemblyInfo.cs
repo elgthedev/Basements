@@ -6,7 +6,7 @@ using Basements;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle(BasementsMod.ModName)]
-[assembly: AssemblyDescription("https://thunderstore.io/c/valheim/p/OdinPlus/Basements/")]
+[assembly: AssemblyDescription("https://valheim.hexium.gg/mods/OdinPlus/Basements")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct(BasementsMod.ModName)]

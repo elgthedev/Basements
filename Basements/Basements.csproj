@@ -14,6 +14,13 @@
     <LangVersion>preview</LangVersion>
     <Nullable>enable</Nullable>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <DeployOnBuild Condition="'$(DeployOnBuild)' == '' AND '$(Configuration)' == 'Debug'">true</DeployOnBuild>
+    <DeployOnBuild Condition="'$(DeployOnBuild)' == ''">false</DeployOnBuild>
+  </PropertyGroup>
+  <Import Project="$(MSBuildThisFileDirectory)..\environment.props" Condition="Exists('$(MSBuildThisFileDirectory)..\environment.props')" />
+  <PropertyGroup>
+    <BepInExPath Condition="'$(BepInExPath)' == '' AND '$(GaleDebugProfilePath)' != ''">$(GaleDebugProfilePath)\BepInEx</BepInExPath>
+    <BepInExPath Condition="'$(BepInExPath)' == '' AND '$(PluginsPath)' != ''">$([System.IO.Path]::GetFullPath('$(PluginsPath)\..'))</BepInExPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -51,9 +58,13 @@
       </PropertyGroup>
     </When>
   </Choose>
+  <PropertyGroup>
+    <BepInExPath Condition="'$(BepInExPath)' == ''">$(GamePath)\BepInEx</BepInExPath>
+    <PluginsPath Condition="'$(PluginsPath)' == ''">$(BepInExPath)\plugins</PluginsPath>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="0Harmony">
-      <HintPath>$(GamePath)\BepInEx\core\0Harmony.dll</HintPath>
+      <HintPath>$(BepInExPath)\core\0Harmony.dll</HintPath>
     </Reference>
     <Reference Include="assembly_guiutils_publicized">
       <HintPath>$(GamePath)\valheim_Data\Managed\publicized_assemblies\assembly_guiutils_publicized.dll</HintPath>
@@ -65,7 +76,7 @@
       <HintPath>$(GamePath)\valheim_Data\Managed\publicized_assemblies\assembly_valheim_publicized.dll</HintPath>
     </Reference>
     <Reference Include="BepInEx">
-      <HintPath>$(GamePath)\BepInEx\core\BepInEx.dll</HintPath>
+      <HintPath>$(BepInExPath)\core\BepInEx.dll</HintPath>
     </Reference>
     <Reference Include="PieceManager, Version=1.2.9.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -107,6 +118,33 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="..\Nexus_Release\Basements.dll">
+      <Link>Nexus_Release\Basements.dll</Link>
+    </Content>
+    <Content Include="..\Nexus_Release\Basements.zip">
+      <Link>Nexus_Release\Basements.zip</Link>
+    </Content>
+    <Content Include="..\Thunderstor_Release\Basements.dll">
+      <Link>Thunderstor_Release\Basements.dll</Link>
+    </Content>
+    <Content Include="..\Thunderstor_Release\Basements.zip">
+      <Link>Thunderstor_Release\Basements.zip</Link>
+    </Content>
+    <Content Include="..\Thunderstor_Release\CHANGELOG.md">
+      <Link>Thunderstor_Release\CHANGELOG.md</Link>
+    </Content>
+    <Content Include="..\Thunderstor_Release\icon.png">
+      <Link>Thunderstor_Release\icon.png</Link>
+    </Content>
+    <Content Include="..\Thunderstor_Release\manifest.json">
+      <Link>Thunderstor_Release\manifest.json</Link>
+    </Content>
+    <Content Include="..\Thunderstor_Release\README.md">
+      <Link>Thunderstor_Release\README.md</Link>
+    </Content>
+    <Content Include="..\Thunderstor_Release\thunderstore.toml">
+      <Link>Thunderstor_Release\thunderstore.toml</Link>
+    </Content>
     <Content Include="ServerSync.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -132,8 +170,14 @@
     <Target Name="AfterBuild">
     </Target>
     -->
-  <Target Name="Copy" AfterTargets="Build">
-    <Exec Command="copy /Y &quot;$(TargetDir)$(AssemblyName).dll&quot; &quot;$(GamePath)\BepInEx\plugins\$(AssemblyName).dll&quot;" />
+  <Target Name="Copy" AfterTargets="ILRepacker" Condition="'$(DeployOnBuild)' == 'true'">
+    <PropertyGroup>
+      <DeployDirectory>$(PluginsPath)\$(AssemblyName)</DeployDirectory>
+    </PropertyGroup>
+    <Message Text="Deploying $(AssemblyName) to $(DeployDirectory)" Importance="high" />
+    <MakeDir Directories="$(DeployDirectory)" />
+    <Copy SourceFiles="$(TargetDir)$(AssemblyName).dll" DestinationFolder="$(DeployDirectory)" />
+    <Copy SourceFiles="$(TargetDir)$(AssemblyName).pdb" DestinationFolder="$(DeployDirectory)" Condition="Exists('$(TargetDir)$(AssemblyName).pdb')" />
   </Target>
   <Import Project="..\packages\ILRepack.Lib.MSBuild.Task.2.0.44.1\build\ILRepack.Lib.MSBuild.Task.targets" Condition="Exists('..\packages\ILRepack.Lib.MSBuild.Task.2.0.44.1\build\ILRepack.Lib.MSBuild.Task.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

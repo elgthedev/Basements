@@ -1,9 +1,9 @@
 {
     "name": "Basements",
-    "version_number": "1.4.1",
+    "version_number": "2.0.0",
     "website_url": "https://www.nexusmods.com/valheim/mods/2894",
-    "description": "Expand into the earth with this placeable basement. Fixed for Ashlands update.",
+    "description": "Expand into the earth with this placeable basement for Valheim 1.0.",
     "dependencies": [ 
-		  "denikson-BepInExPack_Valheim-5.4.2333"
+		  "denikson-BepInExPack_Valheim-5.4.2350"
     ]
 }

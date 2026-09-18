@@ -1,10 +1,16 @@
 ﻿# Basements
 
-This is a project to mantain the Basements mod created by rolopogo and mantained by sbtoonz for some time.
+Basements is maintained by the OdinPlus team and preserves the original `com.rolopogo.Basement` plugin identity for existing players.
 
 ## Developing
 
-This project was created with subreferences, I'll leave it as it is now.
+The project uses the Valheim game assemblies plus the PieceManager and ServerSync submodules. Copy `environment.props.example` to `environment.props` and point it at your Valheim install and Gale debug profile before building.
+
+Build Debug for local iteration and Release for packages. Release output must be inspected as a ZIP before publishing; do not commit publicized game assemblies, dependency inputs, or generated archives as source changes.
+
+### Dependency refresh
+
+When Valheim updates, refresh the publicized assemblies, verify the installed BepInExPack, and check the upstream [PieceManager](https://github.com/AzumattDev/PieceManager/releases) and [ServerSync](https://github.com/blaxxun-boop/ServerSync/releases) releases before rebuilding. Test first in a minimal Gale profile. Valheim 1.0 renamed `PieceTable`'s per-category available-piece collection to `m_availablePiecesByCategory`; Basements' embedded PieceManager is built from the current upstream source with that compatibility update until the upstream project publishes an official fix.
 
 ### Updating a Git Submodule in a "Detached HEAD" State
 
