@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using BepInEx;
@@ -16,21 +17,116 @@ namespace Basements
     public class BasementsMod : BaseUnityPlugin
     {
         internal const string ModName = "Basements";
-        internal const string ModVersion = "1.4.1";
+        internal const string ModVersion = "2.0.0";
         private const string ModGUID = "com.rolopogo.Basement"; // GUID kept
         internal static ManualLogSource _basementLogger = new ManualLogSource(ModName);
-        private static string _configFileName = ModGUID + ".cfg";
-        private static string _configFileFullPath = Paths.ConfigPath + Path.DirectorySeparatorChar + _configFileName;
+        private static readonly string _configFileName = ModGUID + ".cfg";
+        private static readonly string _configFileFullPath = Paths.ConfigPath + Path.DirectorySeparatorChar + _configFileName;
         private readonly Harmony _harmony = new(ModGUID);
+        private FileSystemWatcher? _configWatcher;
 
         internal static ConfigEntry<bool> ServerConfigLocked = null!;       
         internal static ConfigEntry<int> MaxNestedLimit = null!;
-        [SerializeField] private static GameObject _basementPrefab;
+        [SerializeField] private static GameObject? _basementPrefab;
+        private static bool _legacyMaterialsReplaced;
+        private static Material? _basementStoneFloorMaterial;
 
-        internal static GameObject BasementPrefab
+        internal static GameObject? BasementPrefab
         {
             get => _basementPrefab;
             set => _basementPrefab = value;
+        }
+
+        /// <summary>
+        /// The bundled prefab was authored before Valheim 1.0's Unity upgrade. Its materials
+        /// have the same names as game materials but retain legacy shader serialization, which
+        /// PieceManager's _REPLACE_ naming convention cannot detect.
+        /// </summary>
+        internal static void ReplaceLegacyPrefabMaterials()
+        {
+            if (_legacyMaterialsReplaced || BasementPrefab == null) return;
+
+            var prefabMaterials = new HashSet<Material>();
+            foreach (var renderer in BasementPrefab.GetComponentsInChildren<Renderer>(true))
+            {
+                foreach (var material in renderer.sharedMaterials)
+                {
+                    if (material != null) prefabMaterials.Add(material);
+                }
+            }
+
+            var gameMaterials = new Dictionary<string, Material>(StringComparer.Ordinal);
+            foreach (var material in Resources.FindObjectsOfTypeAll<Material>())
+            {
+                if (material == null || prefabMaterials.Contains(material) || material.shader == null) continue;
+                if (string.Equals(material.shader.name, "Standard", StringComparison.Ordinal)) continue;
+                gameMaterials[material.name.Replace(" (Instance)", "")] = material;
+            }
+
+            var replacements = new Dictionary<Material, Material>();
+            foreach (var material in prefabMaterials)
+            {
+                var name = material.name.Replace(" (Instance)", "");
+                var isLegacyStandardMaterial = material.shader != null && string.Equals(material.shader.name, "Standard", StringComparison.Ordinal);
+                var isLegacyHeightmapMaterial = string.Equals(name, "Heightmap_basematerial", StringComparison.Ordinal);
+                if (isLegacyStandardMaterial && gameMaterials.TryGetValue(name, out var replacement))
+                {
+                    replacements[material] = replacement;
+                }
+                else if (isLegacyHeightmapMaterial)
+                {
+                    // The old bundle applies the terrain Heightmap shader to static meshes.
+                    // In Valheim 1.0 that shader requires terrain-specific data the meshes do
+                    // not own, so use the live stone floor material instead.
+                    if (TryGetBasementStoneFloorMaterial(gameMaterials, out var stoneFloorMaterial))
+                    {
+                        replacements[material] = stoneFloorMaterial;
+                    }
+                }
+            }
+
+            foreach (var renderer in BasementPrefab.GetComponentsInChildren<Renderer>(true))
+            {
+                var materials = renderer.sharedMaterials;
+                var changed = false;
+                for (var index = 0; index < materials.Length; index++)
+                {
+                    if (materials[index] != null && replacements.TryGetValue(materials[index], out var replacement))
+                    {
+                        materials[index] = replacement;
+                        changed = true;
+                    }
+                }
+
+                if (changed) renderer.sharedMaterials = materials;
+            }
+
+            _legacyMaterialsReplaced = true;
+            _basementLogger.LogInfo($"Replaced {replacements.Count} legacy basement material(s) with Valheim 1.0 materials.");
+        }
+
+        private static bool TryGetBasementStoneFloorMaterial(IReadOnlyDictionary<string, Material> gameMaterials, out Material material)
+        {
+            if (_basementStoneFloorMaterial != null)
+            {
+                material = _basementStoneFloorMaterial;
+                return true;
+            }
+
+            if (!gameMaterials.TryGetValue("stonefloor", out var sourceMaterial))
+            {
+                material = null!;
+                return false;
+            }
+
+            _basementStoneFloorMaterial = new Material(sourceMaterial)
+            {
+                name = "Basements_StoneFloor"
+            };
+            if (_basementStoneFloorMaterial.HasProperty("_Cull")) _basementStoneFloorMaterial.SetFloat("_Cull", 0f);
+
+            material = _basementStoneFloorMaterial;
+            return true;
         }
 
         public void Awake()
@@ -65,18 +161,23 @@ namespace Basements
 
         private void OnDestroy()
         {
+            _configWatcher?.Dispose();
+            _configWatcher = null;
+            _harmony.UnpatchSelf();
             Config.Save();
         }
 
         private void SetupWatcher()
         {
-            FileSystemWatcher watcher = new(Paths.ConfigPath, _configFileName);
-            watcher.Changed += ReadConfigValues;
-            watcher.Created += ReadConfigValues;
-            watcher.Renamed += ReadConfigValues;
-            watcher.IncludeSubdirectories = true;
-            watcher.SynchronizingObject = ThreadingHelper.SynchronizingObject;
-            watcher.EnableRaisingEvents = true;
+            _configWatcher = new FileSystemWatcher(Paths.ConfigPath, _configFileName)
+            {
+                IncludeSubdirectories = false,
+                SynchronizingObject = ThreadingHelper.SynchronizingObject,
+                EnableRaisingEvents = true
+            };
+            _configWatcher.Changed += ReadConfigValues;
+            _configWatcher.Created += ReadConfigValues;
+            _configWatcher.Renamed += ReadConfigValues;
         }
 
         private void ReadConfigValues(object sender, FileSystemEventArgs e)

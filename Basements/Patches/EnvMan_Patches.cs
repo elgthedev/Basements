@@ -12,9 +12,14 @@ namespace Basements.Patches
 
         static void Postfix(ZoneSystem __instance)
         {
-                if(__instance.m_locationsGenerated)
+                BasementsMod.ReplaceLegacyPrefabMaterials();
+
+                if (__instance.m_locationsGenerated && EnvMan.instance != null && BasementsMod.BasementPrefab != null &&
+                    !EnvMan.instance.m_environments.Exists(x => x.m_name == "Basement"))
                 {
-                    EnvSetup basementEnv = EnvMan.instance.m_environments.Find(x => x.m_name == "Crypt").Clone();
+                    EnvSetup? cryptEnvironment = EnvMan.instance.m_environments.Find(x => x.m_name == "Crypt");
+                    if (cryptEnvironment == null) return;
+                    EnvSetup basementEnv = cryptEnvironment.Clone();
                     basementEnv.m_name = "Basement";
                     basementEnv.m_ambientVol = 0;
                     basementEnv.m_windMax = 0;
@@ -36,6 +41,7 @@ namespace Basements.Patches
                     basementEnv.m_psystems = Array.Empty<GameObject>();
                     EnvMan.instance.m_environments.Add(basementEnv);
                     
+                    if (ZNetScene.instance == null) return;
                     var sfxstone = ZNetScene.instance.GetPrefab("sfx_build_hammer_stone");
                     var vfxstone = ZNetScene.instance.GetPrefab("vfx_Place_stone_wall_2x1");
                  
@@ -43,7 +49,8 @@ namespace Basements.Patches
                
                     var pc = BasementsMod.BasementPrefab.GetComponent<Piece>();
                     pc.m_placeEffect = buildStone;
-                    EnvMan.instance.m_interiorBuildingOverrideEnvironments.Add("Basement");
+                    if (!EnvMan.instance.m_interiorBuildingOverrideEnvironments.Contains("Basement"))
+                        EnvMan.instance.m_interiorBuildingOverrideEnvironments.Add("Basement");
                 }
 
            
