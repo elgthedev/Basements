@@ -6,7 +6,11 @@ Basements is maintained by the OdinPlus team and preserves the original `com.rol
 
 The project uses the Valheim game assemblies plus the PieceManager and ServerSync submodules. Copy `environment.props.example` to `environment.props` and point it at your Valheim install and Gale debug profile before building.
 
-Build Debug for local iteration and Release for packages. Release output must be inspected as a ZIP before publishing; do not commit publicized game assemblies, dependency inputs, or generated archives as source changes.
+Build Debug for local iteration. A Release build generates separate platform packages under `Publish/Thunderstore`, `Publish/Hexium`, and `Publish/Nexus`; inspect each ZIP before publishing. The Nexus archive contains only the merged mod DLL. Do not commit publicized game assemblies or loose dependency inputs.
+
+### Client-side materials
+
+The bundled Unity materials use the `_REPLACE_` prefix for PieceManager material swapping. Valheim 1.0 also requires the legacy `Heightmap_basematerial` to be replaced with the current `stonefloor` material. Basements applies these replacements to the registered prefab and again when a basement `Piece` awakens, so connected clients update the instance they render. Keep the prefix normalization when changing the material replacement code; matching the unprefixed game material name directly leaves the old material in place.
 
 ### Dependency refresh
 

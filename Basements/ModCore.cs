@@ -17,7 +17,7 @@ namespace Basements
     public class BasementsMod : BaseUnityPlugin
     {
         internal const string ModName = "Basements";
-        internal const string ModVersion = "2.0.0";
+        internal const string ModVersion = "2.0.1";
         private const string ModGUID = "com.rolopogo.Basement"; // GUID kept
         internal static ManualLogSource _basementLogger = new ManualLogSource(ModName);
         private static readonly string _configFileName = ModGUID + ".cfg";
@@ -28,7 +28,7 @@ namespace Basements
         internal static ConfigEntry<bool> ServerConfigLocked = null!;       
         internal static ConfigEntry<int> MaxNestedLimit = null!;
         [SerializeField] private static GameObject? _basementPrefab;
-        private static bool _legacyMaterialsReplaced;
+        private static readonly HashSet<GameObject> _legacyMaterialsReplacedPrefabs = new();
         private static Material? _basementStoneFloorMaterial;
 
         internal static GameObject? BasementPrefab
@@ -38,16 +38,31 @@ namespace Basements
         }
 
         /// <summary>
-        /// The bundled prefab was authored before Valheim 1.0's Unity upgrade. Its materials
-        /// have the same names as game materials but retain legacy shader serialization, which
-        /// PieceManager's _REPLACE_ naming convention cannot detect.
+        /// The bundled prefab predates Valheim 1.0 and includes _REPLACE_-prefixed materials
+        /// and a legacy Heightmap material. Normalize placeholder names and replace each local
+        /// basement piece so clients render the same current game materials as the host.
         /// </summary>
         internal static void ReplaceLegacyPrefabMaterials()
         {
-            if (_legacyMaterialsReplaced || BasementPrefab == null) return;
+            var basementPrefab = BasementPrefab;
+            if (basementPrefab == null) return;
+
+            var prefabTargets = new HashSet<GameObject> { basementPrefab };
+            var registeredPrefab = ZNetScene.instance?.GetPrefab(basementPrefab.name);
+            if (registeredPrefab != null) prefabTargets.Add(registeredPrefab);
+
+            foreach (var prefabTarget in prefabTargets)
+            {
+                ReplaceLegacyMaterials(prefabTarget);
+            }
+        }
+
+        internal static void ReplaceLegacyMaterials(GameObject prefabTarget)
+        {
+            if (prefabTarget == null || _legacyMaterialsReplacedPrefabs.Contains(prefabTarget)) return;
 
             var prefabMaterials = new HashSet<Material>();
-            foreach (var renderer in BasementPrefab.GetComponentsInChildren<Renderer>(true))
+            foreach (var renderer in prefabTarget.GetComponentsInChildren<Renderer>(true))
             {
                 foreach (var material in renderer.sharedMaterials)
                 {
@@ -64,9 +79,10 @@ namespace Basements
             }
 
             var replacements = new Dictionary<Material, Material>();
+            var missingStoneFloorMaterial = false;
             foreach (var material in prefabMaterials)
             {
-                var name = material.name.Replace(" (Instance)", "");
+                var name = GetGameMaterialName(material.name);
                 var isLegacyStandardMaterial = material.shader != null && string.Equals(material.shader.name, "Standard", StringComparison.Ordinal);
                 var isLegacyHeightmapMaterial = string.Equals(name, "Heightmap_basematerial", StringComparison.Ordinal);
                 if (isLegacyStandardMaterial && gameMaterials.TryGetValue(name, out var replacement))
@@ -82,10 +98,14 @@ namespace Basements
                     {
                         replacements[material] = stoneFloorMaterial;
                     }
+                    else
+                    {
+                        missingStoneFloorMaterial = true;
+                    }
                 }
             }
 
-            foreach (var renderer in BasementPrefab.GetComponentsInChildren<Renderer>(true))
+            foreach (var renderer in prefabTarget.GetComponentsInChildren<Renderer>(true))
             {
                 var materials = renderer.sharedMaterials;
                 var changed = false;
@@ -101,8 +121,17 @@ namespace Basements
                 if (changed) renderer.sharedMaterials = materials;
             }
 
-            _legacyMaterialsReplaced = true;
-            _basementLogger.LogInfo($"Replaced {replacements.Count} legacy basement material(s) with Valheim 1.0 materials.");
+            if (!missingStoneFloorMaterial) _legacyMaterialsReplacedPrefabs.Add(prefabTarget);
+            _basementLogger.LogInfo($"Replaced {replacements.Count} legacy basement material(s) on '{prefabTarget.name}' with Valheim 1.0 materials.");
+        }
+
+        private static string GetGameMaterialName(string materialName)
+        {
+            var name = materialName.Replace(" (Instance)", "");
+            const string replacementPrefix = "_REPLACE_";
+            return name.StartsWith(replacementPrefix, StringComparison.Ordinal)
+                ? name.Substring(replacementPrefix.Length)
+                : name;
         }
 
         private static bool TryGetBasementStoneFloorMaterial(IReadOnlyDictionary<string, Material> gameMaterials, out Material material)

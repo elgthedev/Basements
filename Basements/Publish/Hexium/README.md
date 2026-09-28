@@ -46,8 +46,14 @@ Basements works alongside [QuickTeleport](https://valheim.hexium.gg/mods/OdinPlu
 - [Video 1](https://streamable.com/t5cizh)
 - [Video 2](https://streamable.com/bix98w)
 
-## Source and support
+## Support
 
-Maintained by the OdinPlus team under the MIT License. Source code: [Basements on GitHub](https://github.com/elgthedev/Basements).
+Need help? Find Elg in the [Odin Plus Discord](https://discord.gg/mbkPcvu9ax).
 
-Install through Gale to use the same Basements package from either catalog. Find the mod on [Hexium](https://valheim.hexium.gg/mods/OdinPlus/Basements) or [endorse it on Nexus Mods](https://www.nexusmods.com/valheim/mods/2894).
+## Liked the mod?
+
+Consider showing some love with a coffee on Ko-fi:
+
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/C0C6S21AN)
+
+> This helps with tooling costs, as well as keeping me able to update the mods frequently and creating new mods and features quickly.
