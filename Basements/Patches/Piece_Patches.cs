@@ -2,6 +2,16 @@
 
 namespace Basements.Patches
 {
+    [HarmonyPatch(typeof(Piece), "Awake")]
+    static class Basement_Piece_Awake_Patches
+    {
+        static void Postfix(Piece __instance)
+        {
+            if (__instance.GetComponentInChildren<Basement>(true) == null) return;
+            BasementsMod.ReplaceLegacyMaterials(__instance.gameObject);
+        }
+    }
+
     [HarmonyPatch(typeof(Piece), nameof(Piece.CanBeRemoved))]
     static class Piece_Patches
     {

@@ -19,8 +19,14 @@
   </PropertyGroup>
   <Import Project="$(MSBuildThisFileDirectory)..\environment.props" Condition="Exists('$(MSBuildThisFileDirectory)..\environment.props')" />
   <PropertyGroup>
-    <BepInExPath Condition="'$(BepInExPath)' == '' AND '$(GaleDebugProfilePath)' != ''">$(GaleDebugProfilePath)\BepInEx</BepInExPath>
-    <BepInExPath Condition="'$(BepInExPath)' == '' AND '$(PluginsPath)' != ''">$([System.IO.Path]::GetFullPath('$(PluginsPath)\..'))</BepInExPath>
+    <_ProfileBepInExPath Condition="'$(GaleDebugProfilePath)' != ''">$(GaleDebugProfilePath)\BepInEx</_ProfileBepInExPath>
+    <_ProfileBepInExPath Condition="'$(_ProfileBepInExPath)' == '' AND '$(GaleProfilePath)' != ''">$(GaleProfilePath)\BepInEx</_ProfileBepInExPath>
+    <_ProfileBepInExPath Condition="'$(_ProfileBepInExPath)' == '' AND '$(PluginsPath)' != ''">$([System.IO.Path]::GetFullPath('$(PluginsPath)\..'))</_ProfileBepInExPath>
+    <BepInExPath Condition="'$(BepInExPath)' == '' AND Exists('$(_ProfileBepInExPath)\core\BepInEx.dll')">$(_ProfileBepInExPath)</BepInExPath>
+    <BepInExPath Condition="'$(BepInExPath)' == '' AND '$(GaleDebugProfilePath)' != '' AND Exists('$(GaleDebugProfilePath)\BepInEx\core\BepInEx.dll')">$(GaleDebugProfilePath)\BepInEx</BepInExPath>
+    <BepInExPath Condition="'$(BepInExPath)' == '' AND '$(GaleProfilePath)' != '' AND Exists('$(GaleProfilePath)\BepInEx\core\BepInEx.dll')">$(GaleProfilePath)\BepInEx</BepInExPath>
+    <GamePath Condition="'$(GamePath)' == ''">C:\Program Files (x86)\Steam\steamapps\common\Valheim</GamePath>
+    <BepInExPath Condition="'$(BepInExPath)' == ''">$(GamePath)\BepInEx</BepInExPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -63,6 +69,7 @@
     <PluginsPath Condition="'$(PluginsPath)' == ''">$(BepInExPath)\plugins</PluginsPath>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="ILRepack.Lib.MSBuild.Task" Version="2.0.46" PrivateAssets="all" />
     <Reference Include="0Harmony">
       <HintPath>$(BepInExPath)\core\0Harmony.dll</HintPath>
     </Reference>
@@ -78,7 +85,7 @@
     <Reference Include="BepInEx">
       <HintPath>$(BepInExPath)\core\BepInEx.dll</HintPath>
     </Reference>
-    <Reference Include="PieceManager, Version=1.2.9.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="PieceManager, Version=1.4.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>.\PieceManager.dll</HintPath>
     </Reference>
@@ -118,33 +125,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\Nexus_Release\Basements.dll">
-      <Link>Nexus_Release\Basements.dll</Link>
-    </Content>
-    <Content Include="..\Nexus_Release\Basements.zip">
-      <Link>Nexus_Release\Basements.zip</Link>
-    </Content>
-    <Content Include="..\Thunderstor_Release\Basements.dll">
-      <Link>Thunderstor_Release\Basements.dll</Link>
-    </Content>
-    <Content Include="..\Thunderstor_Release\Basements.zip">
-      <Link>Thunderstor_Release\Basements.zip</Link>
-    </Content>
-    <Content Include="..\Thunderstor_Release\CHANGELOG.md">
-      <Link>Thunderstor_Release\CHANGELOG.md</Link>
-    </Content>
-    <Content Include="..\Thunderstor_Release\icon.png">
-      <Link>Thunderstor_Release\icon.png</Link>
-    </Content>
-    <Content Include="..\Thunderstor_Release\manifest.json">
-      <Link>Thunderstor_Release\manifest.json</Link>
-    </Content>
-    <Content Include="..\Thunderstor_Release\README.md">
-      <Link>Thunderstor_Release\README.md</Link>
-    </Content>
-    <Content Include="..\Thunderstor_Release\thunderstore.toml">
-      <Link>Thunderstor_Release\thunderstore.toml</Link>
-    </Content>
+    <Content Include="Publish\Common\icon.png" />
     <Content Include="ServerSync.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -161,6 +142,13 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="Publish\Common\CHANGELOG.md" />
+    <None Include="Publish\Common\manifest.json" />
+    <None Include="Publish\Hexium\Basements.zip" />
+    <None Include="Publish\Hexium\README.md" />
+    <None Include="Publish\Nexus\Basements.zip" />
+    <None Include="Publish\Thunderstore\Basements.zip" />
+    <None Include="Publish\Thunderstore\README.md" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
@@ -179,11 +167,5 @@
     <Copy SourceFiles="$(TargetDir)$(AssemblyName).dll" DestinationFolder="$(DeployDirectory)" />
     <Copy SourceFiles="$(TargetDir)$(AssemblyName).pdb" DestinationFolder="$(DeployDirectory)" Condition="Exists('$(TargetDir)$(AssemblyName).pdb')" />
   </Target>
-  <Import Project="..\packages\ILRepack.Lib.MSBuild.Task.2.0.44.1\build\ILRepack.Lib.MSBuild.Task.targets" Condition="Exists('..\packages\ILRepack.Lib.MSBuild.Task.2.0.44.1\build\ILRepack.Lib.MSBuild.Task.targets')" />
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('..\packages\ILRepack.Lib.MSBuild.Task.2.0.44.1\build\ILRepack.Lib.MSBuild.Task.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\ILRepack.Lib.MSBuild.Task.2.0.44.1\build\ILRepack.Lib.MSBuild.Task.targets'))" />
-  </Target>
+  <Import Project="Publish.targets" Condition="Exists('Publish.targets')" />
 </Project>

@@ -1,0 +1,9 @@
+{
+  "name": "Basements",
+  "version_number": "2.0.1",
+  "website_url": "https://valheim.hexium.gg/mods/OdinPlus/Basements",
+  "description": "Expand into the earth with a placeable basement for Valheim 1.0.",
+  "dependencies": [
+    "denikson-BepInExPack_Valheim-5.4.2350"
+  ]
+}

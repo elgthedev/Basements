@@ -1,0 +1,43 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Target Name="PackageBasements" AfterTargets="ILRepacker" Condition="'$(Configuration)' == 'Release'">
+    <PropertyGroup>
+      <PublishRoot>$(MSBuildThisFileDirectory)Publish</PublishRoot>
+      <PackageStageRoot>$(BaseIntermediateOutputPath)package\$(AssemblyName)</PackageStageRoot>
+      <ThunderstoreStage>$(PackageStageRoot)\Thunderstore</ThunderstoreStage>
+      <HexiumStage>$(PackageStageRoot)\Hexium</HexiumStage>
+      <NexusStage>$(PackageStageRoot)\Nexus</NexusStage>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <CommonPublishFiles Include="$(PublishRoot)\Common\**\*" />
+      <ThunderstorePublishFiles Include="$(PublishRoot)\Thunderstore\**\*" Exclude="$(PublishRoot)\Thunderstore\*.zip" />
+      <HexiumPublishFiles Include="$(PublishRoot)\Hexium\**\*" Exclude="$(PublishRoot)\Hexium\*.zip" />
+    </ItemGroup>
+
+    <RemoveDir Directories="$(ThunderstoreStage);$(HexiumStage);$(NexusStage)" />
+    <MakeDir Directories="$(ThunderstoreStage);$(HexiumStage);$(NexusStage);$(PublishRoot)\Thunderstore;$(PublishRoot)\Hexium;$(PublishRoot)\Nexus" />
+
+    <Copy SourceFiles="@(CommonPublishFiles)" DestinationFiles="@(CommonPublishFiles-&gt;'$(ThunderstoreStage)\%(RecursiveDir)%(Filename)%(Extension)')" />
+    <Copy SourceFiles="@(ThunderstorePublishFiles)" DestinationFiles="@(ThunderstorePublishFiles-&gt;'$(ThunderstoreStage)\%(RecursiveDir)%(Filename)%(Extension)')" />
+    <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(ThunderstoreStage)" />
+    <Error Text="Thunderstore README.md is required." Condition="!Exists('$(ThunderstoreStage)\README.md')" />
+    <Error Text="Thunderstore manifest.json is required." Condition="!Exists('$(ThunderstoreStage)\manifest.json')" />
+    <Error Text="Thunderstore icon.png is required." Condition="!Exists('$(ThunderstoreStage)\icon.png')" />
+    <Error Text="Loose PieceManager.dll must not be packaged." Condition="Exists('$(ThunderstoreStage)\PieceManager.dll')" />
+    <Error Text="Loose ServerSync.dll must not be packaged." Condition="Exists('$(ThunderstoreStage)\ServerSync.dll')" />
+    <ZipDirectory SourceDirectory="$(ThunderstoreStage)" DestinationFile="$(PublishRoot)\Thunderstore\$(AssemblyName).zip" Overwrite="true" />
+
+    <Copy SourceFiles="@(CommonPublishFiles)" DestinationFiles="@(CommonPublishFiles-&gt;'$(HexiumStage)\%(RecursiveDir)%(Filename)%(Extension)')" />
+    <Copy SourceFiles="@(HexiumPublishFiles)" DestinationFiles="@(HexiumPublishFiles-&gt;'$(HexiumStage)\%(RecursiveDir)%(Filename)%(Extension)')" />
+    <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(HexiumStage)" />
+    <Error Text="Hexium README.md is required." Condition="!Exists('$(HexiumStage)\README.md')" />
+    <Error Text="Hexium manifest.json is required." Condition="!Exists('$(HexiumStage)\manifest.json')" />
+    <Error Text="Hexium icon.png is required." Condition="!Exists('$(HexiumStage)\icon.png')" />
+    <Error Text="Loose PieceManager.dll must not be packaged." Condition="Exists('$(HexiumStage)\PieceManager.dll')" />
+    <Error Text="Loose ServerSync.dll must not be packaged." Condition="Exists('$(HexiumStage)\ServerSync.dll')" />
+    <ZipDirectory SourceDirectory="$(HexiumStage)" DestinationFile="$(PublishRoot)\Hexium\$(AssemblyName).zip" Overwrite="true" />
+
+    <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(NexusStage)" />
+    <ZipDirectory SourceDirectory="$(NexusStage)" DestinationFile="$(PublishRoot)\Nexus\$(AssemblyName).zip" Overwrite="true" />
+  </Target>
+</Project>

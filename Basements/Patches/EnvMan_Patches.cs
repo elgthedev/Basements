@@ -6,6 +6,15 @@ using UnityEngine;
 //EnvMan.instance.CheckInteriorBuildingOverride())
 namespace Basements.Patches
 {
+    [HarmonyPatch(typeof(ZNetScene), "Awake")]
+    static class ZNetScene_Patches
+    {
+        static void Postfix()
+        {
+            BasementsMod.ReplaceLegacyPrefabMaterials();
+        }
+    }
+
     [HarmonyPatch(typeof(ZoneSystem), nameof(ZoneSystem.GenerateLocationsIfNeeded))]
     static class ZoneSystem_Patches
     {
